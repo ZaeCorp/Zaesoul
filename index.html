@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zae Soul — K-Beauty Inspired Formula</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cormorant:ital,wght@1,300;1,400&family=Montserrat:wght@200;300;400&family=Noto+Serif+KR:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --cream: #faf8f4;
+    --gold: #c9a96e;
+    --gold-light: #e8d5b0;
+    --white: #ffffff;
+    --grey: #888;
+    --text-light: #555;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--black);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.2s ease;
+    transform: translate(-50%, -50%);
+  }
+
+  .cursor-ring {
+    position: fixed;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.12s ease, width 0.3s, height 0.3s;
+    transform: translate(-50%, -50%);
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 28px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    mix-blend-mode: normal;
+    background: rgba(250, 248, 244, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201, 169, 110, 0.15);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: var(--black);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 48px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--black);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-cta {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--black);
+    border: 1px solid var(--gold);
+    padding: 10px 24px;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .nav-cta:hover {
+    background: var(--gold);
+    color: var(--white);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 120px 60px 60px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 20% 50%, rgba(201, 169, 110, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(201, 169, 110, 0.06) 0%, transparent 50%),
+      var(--cream);
+  }
+
+  .hero-grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 200px;
+  }
+
+  .hero-content {
+    position: relative;
+    text-align: center;
+    z-index: 2;
+    max-width: 900px;
+  }
+
+  .hero-korean-top {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 11px;
+    letter-spacing: 8px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(72px, 12vw, 140px);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -2px;
+    color: var(--black);
+    opacity: 0;
+    animation: fadeUp 1.2s ease 0.4s forwards;
+  }
+
+  .hero-title span {
+    display: block;
+    color: var(--black);
+  }
+
+  .hero-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 28px 0;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.6s forwards;
+  }
+
+  .hero-divider-line {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-korean-char {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 22px;
+    color: var(--black);
+    letter-spacing: 4px;
+  }
+
+  .hero-tagline {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 60px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.8s forwards;
+  }
+
+  .hero-cta-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeUp 1s ease 1s forwards;
+  }
+
+  .btn-primary {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    background: var(--black);
+    color: var(--white);
+    padding: 18px 48px;
+    text-decoration: none;
+    transition: all 0.4s;
+    border: 1px solid var(--black);
+  }
+
+  .btn-primary:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .btn-secondary {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    background: transparent;
+    color: var(--black);
+    padding: 18px 48px;
+    text-decoration: none;
+    border: 1px solid rgba(10,10,10,0.3);
+    transition: all 0.4s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.4s forwards;
+  }
+
+  .hero-scroll span {
+    font-size: 9px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--grey);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease infinite;
+  }
+
+  /* MARQUEE */
+  .marquee-section {
+    border-top: 1px solid rgba(201,169,110,0.2);
+    border-bottom: 1px solid rgba(201,169,110,0.2);
+    padding: 20px 0;
+    overflow: hidden;
+    background: var(--black);
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 0;
+    animation: marquee 20s linear infinite;
+    white-space: nowrap;
+  }
+
+  .marquee-item {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    color: var(--gold-light);
+    padding: 0 40px;
+    flex-shrink: 0;
+  }
+
+  .marquee-dot {
+    color: var(--gold);
+    padding: 0 10px;
+  }
+
+  /* ABOUT */
+  .about {
+    padding: 140px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 120px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .about-label {
+    font-size: 9px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+
+  .about-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 54px);
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 32px;
+    font-style: italic;
+  }
+
+  .about-text {
+    font-size: 13px;
+    line-height: 2;
+    color: var(--text-light);
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .about-stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 48px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(201,169,110,0.2);
+  }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--black);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-top: 6px;
+  }
+
+  .about-image {
+    position: relative;
+  }
+
+  .about-image-inner {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: linear-gradient(135deg, #e8ddd0 0%, #d4c5b2 50%, #c9b99a 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-image-inner::before {
+    content: '재소울\A뷰티';
+    white-space: pre;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 48px;
+    color: rgba(255,255,255,0.3);
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .about-image-tag {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    background: var(--black);
+    color: var(--gold);
+    padding: 24px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+
+  /* PRODUCT SECTION */
+  .products {
+    padding: 140px 60px;
+    background: var(--black);
+    color: var(--white);
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.1;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .product-card {
+    position: relative;
+    overflow: hidden;
+    cursor: none;
+  }
+
+  .product-card-image {
+    aspect-ratio: 3/4;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-card-bg {
+    position: absolute;
+    inset: 0;
+    transition: transform 0.6s ease;
+  }
+
+  .product-card:hover .product-card-bg {
+    transform: scale(1.05);
+  }
+
+  .product-card:nth-child(1) .product-card-bg {
+    background: linear-gradient(160deg, #2a1f1a 0%, #4a3728 50%, #6b5040 100%);
+  }
+
+  .product-card:nth-child(2) .product-card-bg {
+    background: linear-gradient(160deg, #1a1f2a 0%, #283550 50%, #3d5070 100%);
+  }
+
+  .product-card:nth-child(3) .product-card-bg {
+    background: linear-gradient(160deg, #1a2a1f 0%, #284535 50%, #3d6b50 100%);
+  }
+
+  .product-card-korean {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Noto Serif KR', serif;
+    font-size: 64px;
+    color: rgba(255,255,255,0.08);
+    pointer-events: none;
+  }
+
+  .product-card-content {
+    padding: 32px;
+    background: var(--black);
+    border-top: 1px solid rgba(201,169,110,0.2);
+  }
+
+  .product-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .product-korean {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+
+  .product-desc {
+    font-size: 11px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 24px;
+  }
+
+  .product-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--gold);
+  }
+
+  .product-price span {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.3);
+    display: block;
+    margin-top: 4px;
+  }
+
+  /* RITUAL SECTION */
+  .ritual {
+    padding: 140px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .ritual-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    margin-top: 80px;
+  }
+
+  .ritual-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .ritual-step {
+    display: flex;
+    gap: 32px;
+    padding: 36px 0;
+    border-bottom: 1px solid rgba(201,169,110,0.15);
+    transition: all 0.3s;
+  }
+
+  .ritual-step:hover .step-number {
+    color: var(--gold);
+  }
+
+  .step-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 48px;
+    font-weight: 300;
+    color: rgba(10,10,10,0.1);
+    line-height: 1;
+    transition: color 0.3s;
+    min-width: 60px;
+  }
+
+  .step-content {}
+
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 8px;
+    font-style: italic;
+  }
+
+  .step-korean {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  .step-text {
+    font-size: 12px;
+    line-height: 1.9;
+    color: var(--text-light);
+  }
+
+  .ritual-visual {
+    position: sticky;
+    top: 120px;
+  }
+
+  .ritual-visual-inner {
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, #f0e8dc 0%, #e0d0bc 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .ritual-circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .ritual-circle::before {
+    content: '';
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,169,110,0.4);
+  }
+
+  .ritual-circle-text {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 32px;
+    color: var(--black);
+  }
+
+  .ritual-corner {
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: rgba(10,10,10,0.3);
+    letter-spacing: 2px;
+  }
+
+  .ritual-corner.tl { top: 24px; left: 24px; }
+  .ritual-corner.tr { top: 24px; right: 24px; }
+  .ritual-corner.bl { bottom: 24px; left: 24px; }
+  .ritual-corner.br { bottom: 24px; right: 24px; }
+
+  /* INGREDIENTS */
+  .ingredients {
+    padding: 140px 60px;
+    background: #0f0f0f;
+    color: var(--white);
+    text-align: center;
+  }
+
+  .ingredients-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(201,169,110,0.1);
+    max-width: 1000px;
+    margin: 80px auto 0;
+  }
+
+  .ingredient-item {
+    background: #0f0f0f;
+    padding: 48px 32px;
+    text-align: center;
+    transition: background 0.3s;
+  }
+
+  .ingredient-item:hover {
+    background: #1a1a1a;
+  }
+
+  .ingredient-korean {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 32px;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .ingredient-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .ingredient-desc {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* TESTIMONIALS */
+  .testimonials {
+    padding: 140px 60px;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+    margin-top: 80px;
+  }
+
+  .testimonial-card {
+    text-align: left;
+    padding: 40px;
+    border: 1px solid rgba(201,169,110,0.15);
+    transition: border-color 0.3s;
+  }
+
+  .testimonial-card:hover {
+    border-color: var(--gold);
+  }
+
+  .testimonial-stars {
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+  }
+
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--black);
+    margin-bottom: 24px;
+  }
+
+  .testimonial-name {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .testimonial-location {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--grey);
+    margin-top: 4px;
+  }
+
+  /* EMAIL SIGNUP */
+  .signup {
+    padding: 140px 60px;
+    background: var(--black);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .signup::before {
+    content: '재소울';
+    position: absolute;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 300px;
+    color: rgba(201,169,110,0.03);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .signup-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .signup-sub {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 48px;
+    position: relative;
+  }
+
+  .signup-form {
+    display: flex;
+    gap: 0;
+    max-width: 480px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .signup-input {
+    flex: 1;
+    background: transparent;
+    border: 1px solid rgba(201,169,110,0.3);
+    border-right: none;
+    padding: 18px 24px;
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .signup-input::placeholder { color: rgba(255,255,255,0.2); }
+  .signup-input:focus { border-color: var(--gold); }
+
+  .signup-btn {
+    background: var(--gold);
+    border: 1px solid var(--gold);
+    color: var(--black);
+    padding: 18px 32px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: none;
+    transition: all 0.3s;
+    white-space: nowrap;
+  }
+
+  .signup-btn:hover {
+    background: var(--gold-light);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 80px 60px 40px;
+    border-top: 1px solid rgba(201,169,110,0.15);
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 60px;
+  }
+
+  .footer-brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 28px;
+    font-weight: 300;
+    margin-bottom: 8px;
+  }
+
+  .footer-brand-korean {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+  }
+
+  .footer-desc {
+    font-size: 12px;
+    line-height: 1.9;
+    color: var(--text-light);
+    max-width: 280px;
+  }
+
+  .footer-col-title {
+    font-size: 9px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--black);
+    margin-bottom: 24px;
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+    color: var(--text-light);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--gold); }
+
+  .footer-bottom {
+    padding-top: 40px;
+    border-top: 1px solid rgba(201,169,110,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-copy {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--grey);
+  }
+
+  .footer-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 2px;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 1; transform: scaleY(1); }
+    50% { opacity: 0.4; transform: scaleY(0.7); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 24px 60px; }
+    .about { grid-template-columns: 1fr; padding: 80px 24px; gap: 60px; }
+    .products { padding: 80px 24px; }
+    .products-grid { grid-template-columns: 1fr; }
+    .ritual { padding: 80px 24px; }
+    .ritual-grid { grid-template-columns: 1fr; }
+    .ingredients { padding: 80px 24px; }
+    .ingredients-grid { grid-template-columns: repeat(2, 1fr); }
+    .testimonials { padding: 80px 24px; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .signup { padding: 80px 24px; }
+    .signup-form { flex-direction: column; }
+    .signup-input { border-right: 1px solid rgba(201,169,110,0.3); border-bottom: none; }
+    footer { padding: 60px 24px 40px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Zae Soul</a>
+  <ul class="nav-links">
+    <li><a href="#about">Our Story</a></li>
+    <li><a href="#products">Collection</a></li>
+    <li><a href="#ritual">Ritual</a></li>
+    <li><a href="#ingredients">Formula</a></li>
+  </ul>
+  <a href="#products" class="nav-cta">Shop Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-content">
+    <p class="hero-korean-top">재소울 뷰티 · Seoul-Inspired Skincare</p>
+    <h1 class="hero-title">
+      <span>Zae</span>
+      <span>Soul</span>
+    </h1>
+    <div class="hero-divider">
+      <div class="hero-divider-line"></div>
+      <span class="hero-korean-char">미</span>
+      <div class="hero-divider-line"></div>
+    </div>
+    <p class="hero-tagline">K — Beauty Inspired Formula</p>
+    <div class="hero-cta-group">
+      <a href="#products" class="btn-primary">Discover the Collection</a>
+      <a href="#about" class="btn-secondary">Our Story</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">SPF 50 Protection</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">재소울 뷰티</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">No White Cast</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">K-Beauty Inspired</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Every Skin Tone</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Born in London</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">SPF 50 Protection</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">재소울 뷰티</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">No White Cast</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">K-Beauty Inspired</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Every Skin Tone</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Born in London</span>
+    <span class="marquee-item">·</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="reveal">
+    <p class="about-label">Our Story · 우리의 이야기</p>
+    <h2 class="about-title">Born in London.<br>Inspired by Seoul.</h2>
+    <p class="about-text">Founded by Zara and Jae — two Londoners obsessed with Korean skincare — Zae Soul was created for skin that's been underserved for too long. We brought the precision of K-beauty formulation to the streets of London.</p>
+    <p class="about-text">Every product carries the soul of both cities. The rigour of Seoul's skincare culture. The boldness of London's beauty scene. Made for every skin tone, every complexion, every person.</p>
+    <div class="about-stats">
+      <div>
+        <div class="stat-number">SPF</div>
+        <div class="stat-number" style="font-size:24px">50+</div>
+        <div class="stat-label">Protection</div>
+      </div>
+      <div>
+        <div class="stat-number">0%</div>
+        <div class="stat-label">White Cast</div>
+      </div>
+      <div>
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Every Skin Tone</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-image reveal">
+    <div class="about-image-inner"></div>
+    <div class="about-image-tag">재소울 · Since 2025</div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="section-header reveal">
+    <p class="section-label">The Collection · 컬렉션</p>
+    <h2 class="section-title">Soul-Powered<br>Suncare</h2>
+  </div>
+  <div class="products-grid">
+    <div class="product-card reveal">
+      <div class="product-card-image">
+        <div class="product-card-bg"></div>
+        <div class="product-card-korean">선</div>
+      </div>
+      <div class="product-card-content">
+        <div class="product-name">Tinted Soul SPF 50</div>
+        <div class="product-korean">틴티드 선크림</div>
+        <div class="product-desc">Lightweight tinted formula. Zero white cast. Dewy glow finish for all skin tones.</div>
+        <div class="product-price">£16.99 <span>Free UK Delivery</span></div>
+      </div>
+    </div>
+    <div class="product-card reveal">
+      <div class="product-card-image">
+        <div class="product-card-bg"></div>
+        <div class="product-card-korean">빛</div>
+      </div>
+      <div class="product-card-content">
+        <div class="product-name">Glow Essence SPF 50</div>
+        <div class="product-korean">글로우 에센스</div>
+        <div class="product-desc">Serum-finish sunscreen with hyaluronic acid. Glass skin in one step.</div>
+        <div class="product-price">£18.99 <span>Free UK Delivery</span></div>
+      </div>
+    </div>
+    <div class="product-card reveal">
+      <div class="product-card-image">
+        <div class="product-card-bg"></div>
+        <div class="product-card-korean">순</div>
+      </div>
+      <div class="product-card-content">
+        <div class="product-name">Pure Matte SPF 50</div>
+        <div class="product-korean">퓨어 매트</div>
+        <div class="product-desc">Oil-control matte finish. Invisible on skin. Perfect under makeup.</div>
+        <div class="product-price">£15.99 <span>Free UK Delivery</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RITUAL -->
+<section class="ritual" id="ritual">
+  <div class="section-header reveal">
+    <p class="section-label">The Ritual · 의식</p>
+    <h2 class="section-title" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(40px,5vw,64px);font-weight:300">Your Morning<br>Soul Ritual</h2>
+  </div>
+  <div class="ritual-grid">
+    <div class="ritual-steps reveal">
+      <div class="ritual-step">
+        <div class="step-number">01</div>
+        <div class="step-content">
+          <div class="step-title">Cleanse</div>
+          <div class="step-korean">세안 · Sae-an</div>
+          <div class="step-text">Start with a clean canvas. Gentle cleanse to prepare your skin for maximum SPF absorption.</div>
+        </div>
+      </div>
+      <div class="ritual-step">
+        <div class="step-number">02</div>
+        <div class="step-content">
+          <div class="step-title">Tone & Essence</div>
+          <div class="step-korean">토너 · Toner</div>
+          <div class="step-text">Layer your essences. Korean skincare is about layering light hydration for a plump base.</div>
+        </div>
+      </div>
+      <div class="ritual-step">
+        <div class="step-number">03</div>
+        <div class="step-content">
+          <div class="step-title">Zae Soul SPF</div>
+          <div class="step-korean">선크림 · Sunscreen</div>
+          <div class="step-text">The final step. Apply Zae Soul SPF 50 as the last layer. Pat gently — never rub. Let it melt into your skin.</div>
+        </div>
+      </div>
+      <div class="ritual-step">
+        <div class="step-number">04</div>
+        <div class="step-content">
+          <div class="step-title">Reapply</div>
+          <div class="step-korean">재도포 · Jae-dopo</div>
+          <div class="step-text">Every 2 hours for full protection. Our lightweight formula makes reapplication effortless.</div>
+        </div>
+      </div>
+    </div>
+    <div class="ritual-visual reveal">
+      <div class="ritual-visual-inner">
+        <div class="ritual-circle">
+          <span class="ritual-circle-text">재소울</span>
+        </div>
+        <span class="ritual-corner tl">Morning</span>
+        <span class="ritual-corner tr">Ritual</span>
+        <span class="ritual-corner bl">재소울</span>
+        <span class="ritual-corner br">뷰티</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INGREDIENTS -->
+<section class="ingredients" id="ingredients">
+  <div class="section-header reveal">
+    <p class="section-label" style="color:var(--gold)">The Formula · 포뮬라</p>
+    <h2 class="section-title">K-Beauty<br>Ingredients</h2>
+  </div>
+  <div class="ingredients-grid reveal">
+    <div class="ingredient-item">
+      <div class="ingredient-korean">녹차</div>
+      <div class="ingredient-name">Green Tea Extract</div>
+      <div class="ingredient-desc">Antioxidant Protection</div>
+    </div>
+    <div class="ingredient-item">
+      <div class="ingredient-korean">히알루론</div>
+      <div class="ingredient-name">Hyaluronic Acid</div>
+      <div class="ingredient-desc">Deep Hydration</div>
+    </div>
+    <div class="ingredient-item">
+      <div class="ingredient-korean">나이아신</div>
+      <div class="ingredient-name">Niacinamide</div>
+      <div class="ingredient-desc">Even Skin Tone</div>
+    </div>
+    <div class="ingredient-item">
+      <div class="ingredient-korean">판테놀</div>
+      <div class="ingredient-name">Panthenol B5</div>
+      <div class="ingredient-desc">Skin Barrier Repair</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-header reveal">
+    <p class="section-label">Reviews · 리뷰</p>
+    <h2 class="section-title" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(40px,5vw,64px);font-weight:300">The Soul<br>Speaks</h2>
+  </div>
+  <div class="testimonials-grid reveal">
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★ ★ ★ ★ ★</div>
+      <p class="testimonial-text">"Finally a sunscreen that doesn't leave a white cast on my deeper skin tone. The tinted formula is everything."</p>
+      <div class="testimonial-name">Amara K.</div>
+      <div class="testimonial-location">London, UK</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★ ★ ★ ★ ★</div>
+      <p class="testimonial-text">"I'm obsessed with K-beauty and this brand genuinely delivers. The texture is so lightweight. Wear it every single day."</p>
+      <div class="testimonial-name">Priya S.</div>
+      <div class="testimonial-location">Manchester, UK</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★ ★ ★ ★ ★</div>
+      <p class="testimonial-text">"The packaging alone had me. Then I tried it and I was completely sold. This is my everyday SPF now."</p>
+      <div class="testimonial-name">Sofia M.</div>
+      <div class="testimonial-location">Birmingham, UK</div>
+    </div>
+  </div>
+</section>
+
+<!-- EMAIL SIGNUP -->
+<section class="signup">
+  <h2 class="signup-title">Join the Soul</h2>
+  <p class="signup-sub">Early access · Exclusive offers · Launch updates</p>
+  <div class="signup-form">
+    <input type="email" class="signup-input" placeholder="Your email address">
+    <button class="signup-btn">Join Now</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">Zae Soul</div>
+      <div class="footer-brand-korean">재소울 뷰티</div>
+      <p class="footer-desc">K-Beauty inspired formula. Born in London, created for every skin tone on earth.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Shop</div>
+      <ul class="footer-links">
+        <li><a href="#">Tinted SPF 50</a></li>
+        <li><a href="#">Glow Essence</a></li>
+        <li><a href="#">Pure Matte</a></li>
+        <li><a href="#">All Products</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">About</div>
+      <ul class="footer-links">
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">The Formula</a></li>
+        <li><a href="#">Ingredients</a></li>
+        <li><a href="#">Sustainability</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Help</div>
+      <ul class="footer-links">
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Shipping</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Zae Soul Beauty · Zae Corp Ltd · All rights reserved</span>
+    <span class="footer-tagline">재소울 · K-Beauty Inspired Formula</span>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+  });
+
+  function animateRing() {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    ring.style.left = ringX + 'px';
+    ring.style.top = ringY + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Hover cursor expand
+  document.querySelectorAll('a, button, .product-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      ring.style.width = '56px';
+      ring.style.height = '56px';
+      ring.style.borderColor = 'var(--gold)';
+    });
+    el.addEventListener('mouseleave', () => {
+      ring.style.width = '32px';
+      ring.style.height = '32px';
+    });
+  });
+
+  // Duplicate marquee for seamless loop
+  const track = document.querySelector('.marquee-track');
+  track.innerHTML += track.innerHTML;
+</script>
+</body>
+</html>
