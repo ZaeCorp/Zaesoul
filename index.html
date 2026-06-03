@@ -1,1365 +1,1221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zae Soul — K-Beauty Inspired Formula</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cormorant:ital,wght@1,300;1,400&family=Montserrat:wght@200;300;400&family=Noto+Serif+KR:wght@300;400&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --black: #0a0a0a;
-    --cream: #faf8f4;
-    --gold: #c9a96e;
-    --gold-light: #e8d5b0;
-    --white: #ffffff;
-    --grey: #888;
-    --text-light: #555;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--cream);
-    color: var(--black);
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
-    overflow-x: hidden;
-    cursor: none;
-  }
-
-  /* Custom cursor */
-  .cursor {
-    position: fixed;
-    width: 8px;
-    height: 8px;
-    background: var(--gold);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.2s ease;
-    transform: translate(-50%, -50%);
-  }
-
-  .cursor-ring {
-    position: fixed;
-    width: 32px;
-    height: 32px;
-    border: 1px solid var(--gold);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    transition: transform 0.12s ease, width 0.3s, height 0.3s;
-    transform: translate(-50%, -50%);
-  }
-
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    padding: 28px 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    mix-blend-mode: normal;
-    background: rgba(250, 248, 244, 0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(201, 169, 110, 0.15);
-  }
-
-  .nav-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 22px;
-    letter-spacing: 2px;
-    color: var(--black);
-    text-decoration: none;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 48px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 10px;
-    font-weight: 300;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--black);
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-
-  .nav-links a:hover { color: var(--gold); }
-
-  .nav-cta {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 10px;
-    font-weight: 300;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--black);
-    border: 1px solid var(--gold);
-    padding: 10px 24px;
-    text-decoration: none;
-    transition: all 0.3s;
-  }
-
-  .nav-cta:hover {
-    background: var(--gold);
-    color: var(--white);
-  }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    padding: 120px 60px 60px;
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background: 
-      radial-gradient(ellipse at 20% 50%, rgba(201, 169, 110, 0.08) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 20%, rgba(201, 169, 110, 0.06) 0%, transparent 50%),
-      var(--cream);
-  }
-
-  .hero-grain {
-    position: absolute;
-    inset: 0;
-    opacity: 0.03;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    background-size: 200px;
-  }
-
-  .hero-content {
-    position: relative;
-    text-align: center;
-    z-index: 2;
-    max-width: 900px;
-  }
-
-  .hero-korean-top {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 11px;
-    letter-spacing: 8px;
-    color: var(--gold);
-    text-transform: uppercase;
-    margin-bottom: 40px;
-    opacity: 0;
-    animation: fadeUp 1s ease 0.2s forwards;
-  }
-
-  .hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: clamp(72px, 12vw, 140px);
-    font-weight: 300;
-    line-height: 0.95;
-    letter-spacing: -2px;
-    color: var(--black);
-    opacity: 0;
-    animation: fadeUp 1.2s ease 0.4s forwards;
-  }
-
-  .hero-title span {
-    display: block;
-    color: var(--black);
-  }
-
-  .hero-divider {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    margin: 28px 0;
-    opacity: 0;
-    animation: fadeUp 1s ease 0.6s forwards;
-  }
-
-  .hero-divider-line {
-    width: 60px;
-    height: 1px;
-    background: var(--gold);
-  }
-
-  .hero-korean-char {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 22px;
-    color: var(--black);
-    letter-spacing: 4px;
-  }
-
-  .hero-tagline {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 10px;
-    font-weight: 300;
-    letter-spacing: 6px;
-    text-transform: uppercase;
-    color: var(--text-light);
-    margin-bottom: 60px;
-    opacity: 0;
-    animation: fadeUp 1s ease 0.8s forwards;
-  }
-
-  .hero-cta-group {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    opacity: 0;
-    animation: fadeUp 1s ease 1s forwards;
-  }
-
-  .btn-primary {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 10px;
-    font-weight: 300;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    background: var(--black);
-    color: var(--white);
-    padding: 18px 48px;
-    text-decoration: none;
-    transition: all 0.4s;
-    border: 1px solid var(--black);
-  }
-
-  .btn-primary:hover {
-    background: var(--gold);
-    border-color: var(--gold);
-  }
-
-  .btn-secondary {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 10px;
-    font-weight: 300;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    background: transparent;
-    color: var(--black);
-    padding: 18px 48px;
-    text-decoration: none;
-    border: 1px solid rgba(10,10,10,0.3);
-    transition: all 0.4s;
-  }
-
-  .btn-secondary:hover {
-    border-color: var(--gold);
-    color: var(--gold);
-  }
-
-  .hero-scroll {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    opacity: 0;
-    animation: fadeUp 1s ease 1.4s forwards;
-  }
-
-  .hero-scroll span {
-    font-size: 9px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--grey);
-  }
-
-  .scroll-line {
-    width: 1px;
-    height: 50px;
-    background: linear-gradient(to bottom, var(--gold), transparent);
-    animation: scrollPulse 2s ease infinite;
-  }
-
-  /* MARQUEE */
-  .marquee-section {
-    border-top: 1px solid rgba(201,169,110,0.2);
-    border-bottom: 1px solid rgba(201,169,110,0.2);
-    padding: 20px 0;
-    overflow: hidden;
-    background: var(--black);
-  }
-
-  .marquee-track {
-    display: flex;
-    gap: 0;
-    animation: marquee 20s linear infinite;
-    white-space: nowrap;
-  }
-
-  .marquee-item {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 16px;
-    font-weight: 300;
-    letter-spacing: 3px;
-    color: var(--gold-light);
-    padding: 0 40px;
-    flex-shrink: 0;
-  }
-
-  .marquee-dot {
-    color: var(--gold);
-    padding: 0 10px;
-  }
-
-  /* ABOUT */
-  .about {
-    padding: 140px 60px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 120px;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .about-label {
-    font-size: 9px;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 24px;
-  }
-
-  .about-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(36px, 4vw, 54px);
-    font-weight: 300;
-    line-height: 1.2;
-    margin-bottom: 32px;
-    font-style: italic;
-  }
-
-  .about-text {
-    font-size: 13px;
-    line-height: 2;
-    color: var(--text-light);
-    margin-bottom: 20px;
-    font-weight: 300;
-  }
-
-  .about-stats {
-    display: flex;
-    gap: 40px;
-    margin-top: 48px;
-    padding-top: 40px;
-    border-top: 1px solid rgba(201,169,110,0.2);
-  }
-
-  .stat-number {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 42px;
-    font-weight: 300;
-    font-style: italic;
-    color: var(--black);
-    line-height: 1;
-  }
-
-  .stat-label {
-    font-size: 9px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--grey);
-    margin-top: 6px;
-  }
-
-  .about-image {
-    position: relative;
-  }
-
-  .about-image-inner {
-    width: 100%;
-    aspect-ratio: 3/4;
-    background: linear-gradient(135deg, #e8ddd0 0%, #d4c5b2 50%, #c9b99a 100%);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .about-image-inner::before {
-    content: '재소울\A뷰티';
-    white-space: pre;
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Noto Serif KR', serif;
-    font-size: 48px;
-    color: rgba(255,255,255,0.3);
-    text-align: center;
-    line-height: 1.5;
-  }
-
-  .about-image-tag {
-    position: absolute;
-    bottom: -20px;
-    right: -20px;
-    background: var(--black);
-    color: var(--gold);
-    padding: 24px;
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 14px;
-    letter-spacing: 2px;
-  }
-
-  /* PRODUCT SECTION */
-  .products {
-    padding: 140px 60px;
-    background: var(--black);
-    color: var(--white);
-  }
-
-  .section-header {
-    text-align: center;
-    margin-bottom: 80px;
-  }
-
-  .section-label {
-    font-size: 9px;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 20px;
-  }
-
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: clamp(40px, 5vw, 64px);
-    font-weight: 300;
-    color: var(--white);
-    line-height: 1.1;
-  }
-
-  .products-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .product-card {
-    position: relative;
-    overflow: hidden;
-    cursor: none;
-  }
-
-  .product-card-image {
-    aspect-ratio: 3/4;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .product-card-bg {
-    position: absolute;
-    inset: 0;
-    transition: transform 0.6s ease;
-  }
-
-  .product-card:hover .product-card-bg {
-    transform: scale(1.05);
-  }
-
-  .product-card:nth-child(1) .product-card-bg {
-    background: linear-gradient(160deg, #2a1f1a 0%, #4a3728 50%, #6b5040 100%);
-  }
-
-  .product-card:nth-child(2) .product-card-bg {
-    background: linear-gradient(160deg, #1a1f2a 0%, #283550 50%, #3d5070 100%);
-  }
-
-  .product-card:nth-child(3) .product-card-bg {
-    background: linear-gradient(160deg, #1a2a1f 0%, #284535 50%, #3d6b50 100%);
-  }
-
-  .product-card-korean {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: 'Noto Serif KR', serif;
-    font-size: 64px;
-    color: rgba(255,255,255,0.08);
-    pointer-events: none;
-  }
-
-  .product-card-content {
-    padding: 32px;
-    background: var(--black);
-    border-top: 1px solid rgba(201,169,110,0.2);
-  }
-
-  .product-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 22px;
-    font-weight: 300;
-    color: var(--white);
-    margin-bottom: 8px;
-  }
-
-  .product-korean {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 11px;
-    color: var(--gold);
-    letter-spacing: 2px;
-    margin-bottom: 12px;
-  }
-
-  .product-desc {
-    font-size: 11px;
-    line-height: 1.8;
-    color: rgba(255,255,255,0.4);
-    margin-bottom: 24px;
-  }
-
-  .product-price {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 300;
-    color: var(--gold);
-  }
-
-  .product-price span {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 10px;
-    letter-spacing: 3px;
-    color: rgba(255,255,255,0.3);
-    display: block;
-    margin-top: 4px;
-  }
-
-  /* RITUAL SECTION */
-  .ritual {
-    padding: 140px 60px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .ritual-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: start;
-    margin-top: 80px;
-  }
-
-  .ritual-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .ritual-step {
-    display: flex;
-    gap: 32px;
-    padding: 36px 0;
-    border-bottom: 1px solid rgba(201,169,110,0.15);
-    transition: all 0.3s;
-  }
-
-  .ritual-step:hover .step-number {
-    color: var(--gold);
-  }
-
-  .step-number {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 48px;
-    font-weight: 300;
-    color: rgba(10,10,10,0.1);
-    line-height: 1;
-    transition: color 0.3s;
-    min-width: 60px;
-  }
-
-  .step-content {}
-
-  .step-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    font-weight: 400;
-    margin-bottom: 8px;
-    font-style: italic;
-  }
-
-  .step-korean {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 10px;
-    color: var(--gold);
-    letter-spacing: 2px;
-    margin-bottom: 10px;
-  }
-
-  .step-text {
-    font-size: 12px;
-    line-height: 1.9;
-    color: var(--text-light);
-  }
-
-  .ritual-visual {
-    position: sticky;
-    top: 120px;
-  }
-
-  .ritual-visual-inner {
-    aspect-ratio: 1;
-    background: linear-gradient(135deg, #f0e8dc 0%, #e0d0bc 100%);
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-
-  .ritual-circle {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    border: 1px solid var(--gold);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-
-  .ritual-circle::before {
-    content: '';
-    position: absolute;
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    border: 1px solid rgba(201,169,110,0.4);
-  }
-
-  .ritual-circle-text {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 32px;
-    color: var(--black);
-  }
-
-  .ritual-corner {
-    position: absolute;
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 12px;
-    color: rgba(10,10,10,0.3);
-    letter-spacing: 2px;
-  }
-
-  .ritual-corner.tl { top: 24px; left: 24px; }
-  .ritual-corner.tr { top: 24px; right: 24px; }
-  .ritual-corner.bl { bottom: 24px; left: 24px; }
-  .ritual-corner.br { bottom: 24px; right: 24px; }
-
-  /* INGREDIENTS */
-  .ingredients {
-    padding: 140px 60px;
-    background: #0f0f0f;
-    color: var(--white);
-    text-align: center;
-  }
-
-  .ingredients-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: rgba(201,169,110,0.1);
-    max-width: 1000px;
-    margin: 80px auto 0;
-  }
-
-  .ingredient-item {
-    background: #0f0f0f;
-    padding: 48px 32px;
-    text-align: center;
-    transition: background 0.3s;
-  }
-
-  .ingredient-item:hover {
-    background: #1a1a1a;
-  }
-
-  .ingredient-korean {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 32px;
-    color: var(--gold);
-    margin-bottom: 16px;
-  }
-
-  .ingredient-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 18px;
-    color: var(--white);
-    margin-bottom: 8px;
-  }
-
-  .ingredient-desc {
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.3);
-  }
-
-  /* TESTIMONIALS */
-  .testimonials {
-    padding: 140px 60px;
-    max-width: 1000px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 48px;
-    margin-top: 80px;
-  }
-
-  .testimonial-card {
-    text-align: left;
-    padding: 40px;
-    border: 1px solid rgba(201,169,110,0.15);
-    transition: border-color 0.3s;
-  }
-
-  .testimonial-card:hover {
-    border-color: var(--gold);
-  }
-
-  .testimonial-stars {
-    color: var(--gold);
-    font-size: 12px;
-    letter-spacing: 3px;
-    margin-bottom: 20px;
-  }
-
-  .testimonial-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 16px;
-    line-height: 1.7;
-    color: var(--black);
-    margin-bottom: 24px;
-  }
-
-  .testimonial-name {
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold);
-  }
-
-  .testimonial-location {
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--grey);
-    margin-top: 4px;
-  }
-
-  /* EMAIL SIGNUP */
-  .signup {
-    padding: 140px 60px;
-    background: var(--black);
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .signup::before {
-    content: '재소울';
-    position: absolute;
-    font-family: 'Noto Serif KR', serif;
-    font-size: 300px;
-    color: rgba(201,169,110,0.03);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    white-space: nowrap;
-  }
-
-  .signup-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: clamp(40px, 5vw, 64px);
-    font-weight: 300;
-    color: var(--white);
-    margin-bottom: 16px;
-    position: relative;
-  }
-
-  .signup-sub {
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.4);
-    margin-bottom: 48px;
-    position: relative;
-  }
-
-  .signup-form {
-    display: flex;
-    gap: 0;
-    max-width: 480px;
-    margin: 0 auto;
-    position: relative;
-  }
-
-  .signup-input {
-    flex: 1;
-    background: transparent;
-    border: 1px solid rgba(201,169,110,0.3);
-    border-right: none;
-    padding: 18px 24px;
-    color: var(--white);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px;
-    font-weight: 300;
-    letter-spacing: 2px;
-    outline: none;
-    transition: border-color 0.3s;
-  }
-
-  .signup-input::placeholder { color: rgba(255,255,255,0.2); }
-  .signup-input:focus { border-color: var(--gold); }
-
-  .signup-btn {
-    background: var(--gold);
-    border: 1px solid var(--gold);
-    color: var(--black);
-    padding: 18px 32px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 10px;
-    font-weight: 300;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    cursor: none;
-    transition: all 0.3s;
-    white-space: nowrap;
-  }
-
-  .signup-btn:hover {
-    background: var(--gold-light);
-  }
-
-  /* FOOTER */
-  footer {
-    padding: 80px 60px 40px;
-    border-top: 1px solid rgba(201,169,110,0.15);
-  }
-
-  .footer-top {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 60px;
-    margin-bottom: 60px;
-  }
-
-  .footer-brand-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 28px;
-    font-weight: 300;
-    margin-bottom: 8px;
-  }
-
-  .footer-brand-korean {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 12px;
-    color: var(--gold);
-    letter-spacing: 3px;
-    margin-bottom: 20px;
-  }
-
-  .footer-desc {
-    font-size: 12px;
-    line-height: 1.9;
-    color: var(--text-light);
-    max-width: 280px;
-  }
-
-  .footer-col-title {
-    font-size: 9px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--black);
-    margin-bottom: 24px;
-  }
-
-  .footer-links {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .footer-links a {
-    font-size: 12px;
-    color: var(--text-light);
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-
-  .footer-links a:hover { color: var(--gold); }
-
-  .footer-bottom {
-    padding-top: 40px;
-    border-top: 1px solid rgba(201,169,110,0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .footer-copy {
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--grey);
-  }
-
-  .footer-tagline {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 13px;
-    color: var(--gold);
-    letter-spacing: 2px;
-  }
-
-  /* ANIMATIONS */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 1; transform: scaleY(1); }
-    50% { opacity: 0.4; transform: scaleY(0.7); }
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* MOBILE */
-  @media (max-width: 768px) {
-    nav { padding: 20px 24px; }
-    .nav-links { display: none; }
-    .hero { padding: 100px 24px 60px; }
-    .about { grid-template-columns: 1fr; padding: 80px 24px; gap: 60px; }
-    .products { padding: 80px 24px; }
-    .products-grid { grid-template-columns: 1fr; }
-    .ritual { padding: 80px 24px; }
-    .ritual-grid { grid-template-columns: 1fr; }
-    .ingredients { padding: 80px 24px; }
-    .ingredients-grid { grid-template-columns: repeat(2, 1fr); }
-    .testimonials { padding: 80px 24px; }
-    .testimonials-grid { grid-template-columns: 1fr; }
-    .signup { padding: 80px 24px; }
-    .signup-form { flex-direction: column; }
-    .signup-input { border-right: 1px solid rgba(201,169,110,0.3); border-bottom: none; }
-    footer { padding: 60px 24px 40px; }
-    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
-    .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Join the ZAE SOUL SPF pre-launch waitlist for sample testing updates, early access, and launch offers.">
+  <title>ZAE SOUL | SPF that feels like skincare</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Libre+Caslon+Text:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: #faf9f6;
+      --surface: #ffffff;
+      --surface-soft: #f4f3f1;
+      --surface-warm: #efebe4;
+      --surface-deep: #e5ddd3;
+      --primary: #615247;
+      --primary-light: #7a6a5e;
+      --text: #1a1c1a;
+      --muted: #5b514a;
+      --border: #d7c9be;
+      --shadow: 0 24px 70px rgba(97, 82, 71, 0.13);
+      --shadow-soft: 0 14px 36px rgba(97, 82, 71, 0.09);
+      --serif: "Libre Caslon Text", Georgia, serif;
+      --sans: "Hanken Grotesk", Arial, sans-serif;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--background);
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 15%, rgba(244, 223, 208, 0.34), transparent 28rem),
+        radial-gradient(circle at 86% 22%, rgba(214, 195, 181, 0.24), transparent 22rem),
+        linear-gradient(180deg, #fbfaf7 0%, #faf9f6 44%, #f4f1ec 100%);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    img, svg { display: block; }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input, select {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    .container {
+      width: min(calc(100% - 40px), var(--max));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 50;
+      background: rgba(250, 249, 246, 0.86);
+      border-bottom: 1px solid rgba(215, 201, 190, 0.58);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 76px;
+      gap: 24px;
+    }
+
+    .brand {
+      font-family: var(--serif);
+      color: var(--primary);
+      font-size: 22px;
+      letter-spacing: 0.16em;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .nav-links a {
+      transition: color 180ms ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 25px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button-primary {
+      color: #fffaf5;
+      background: var(--primary);
+      box-shadow: 0 16px 30px rgba(97, 82, 71, 0.22);
+    }
+
+    .button-primary:hover {
+      background: #4f433a;
+      box-shadow: 0 18px 38px rgba(97, 82, 71, 0.28);
+    }
+
+    .button-secondary {
+      color: var(--primary);
+      background: rgba(255, 255, 255, 0.58);
+      border-color: rgba(122, 106, 94, 0.24);
+    }
+
+    .section {
+      padding: 108px 0;
+    }
+
+    .hero {
+      min-height: 590px;
+      padding: 112px 0 42px;
+      display: grid;
+      align-items: center;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr minmax(420px, 520px);
+      align-items: center;
+      gap: 74px;
+    }
+
+    h1, h2, h3, p {
+      margin-top: 0;
+    }
+
+    h1, h2 {
+      font-family: var(--serif);
+      font-weight: 400;
+      color: var(--text);
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 610px;
+      margin-bottom: 24px;
+      font-size: clamp(48px, 7vw, 84px);
+      line-height: 0.98;
+    }
+
+    h2 {
+      margin-bottom: 16px;
+      font-size: clamp(34px, 4vw, 54px);
+      line-height: 1.08;
+    }
+
+    .hero-copy {
+      max-width: 560px;
+      margin-bottom: 34px;
+      color: var(--muted);
+      font-size: 19px;
+      line-height: 1.72;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .sample-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(91, 81, 74, 0.82);
+      font-size: 13px;
+    }
+
+    .sample-note::before {
+      width: 8px;
+      height: 8px;
+      content: "";
+      border-radius: 999px;
+      background: #c9b7aa;
+      box-shadow: 0 0 0 6px rgba(201, 183, 170, 0.18);
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .product-frame {
+      position: relative;
+      overflow: hidden;
+      min-height: 382px;
+      border: 1px solid rgba(215, 201, 190, 0.72);
+      border-radius: 32px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(240, 233, 224, 0.5)),
+        var(--surface-warm);
+      box-shadow: var(--shadow);
+      isolation: isolate;
+    }
+
+    .product-frame img {
+      width: 100%;
+      height: 100%;
+      min-height: 382px;
+      object-fit: cover;
+      filter: saturate(0.92) contrast(1.02);
+    }
+
+    .badge-stack {
+      position: absolute;
+      inset: 42px -18px auto auto;
+      display: grid;
+      gap: 18px;
+      z-index: 3;
+    }
+
+    .hero-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: max-content;
+      min-width: 168px;
+      padding: 13px 16px;
+      color: var(--primary);
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(215, 201, 190, 0.7);
+      border-radius: 18px;
+      box-shadow: var(--shadow-soft);
+      animation: float 5.5s ease-in-out infinite;
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-badge:nth-child(2) {
+      margin-left: -58px;
+      animation-delay: -1.4s;
+    }
+
+    .hero-badge:nth-child(3) {
+      margin-left: 18px;
+      animation-delay: -2.8s;
+    }
+
+    .badge-icon {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      flex: 0 0 34px;
+      border-radius: 999px;
+      background: var(--surface-soft);
+    }
+
+    .hero-badge span:last-child {
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .waitlist-band {
+      background: linear-gradient(180deg, rgba(244, 243, 241, 0.62), rgba(239, 235, 228, 0.86));
+      border-top: 1px solid rgba(215, 201, 190, 0.42);
+      border-bottom: 1px solid rgba(215, 201, 190, 0.42);
+    }
+
+    .waitlist-shell {
+      display: grid;
+      grid-template-columns: 0.9fr 1fr;
+      gap: 56px;
+      align-items: center;
+      padding: 72px;
+      border: 1px solid rgba(215, 201, 190, 0.72);
+      border-radius: 34px;
+      background: rgba(255, 255, 255, 0.44);
+      box-shadow: 0 24px 90px rgba(97, 82, 71, 0.08);
+    }
+
+    .section-copy {
+      max-width: 620px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .benefits {
+      display: grid;
+      gap: 20px;
+      margin: 42px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .benefits li {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      align-items: center;
+      gap: 16px;
+      color: var(--muted);
+    }
+
+    .benefit-icon, .card-icon {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      color: var(--primary);
+      background: var(--surface);
+      border: 1px solid rgba(215, 201, 190, 0.72);
+      border-radius: 16px;
+      box-shadow: 0 10px 26px rgba(97, 82, 71, 0.07);
+    }
+
+    .form-card {
+      padding: 38px;
+      border: 1px solid rgba(215, 201, 190, 0.68);
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: var(--shadow);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field-full {
+      grid-column: 1 / -1;
+    }
+
+    label, .label {
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    input, select {
+      width: 100%;
+      min-height: 48px;
+      padding: 0 15px;
+      color: var(--text);
+      background: #fffdf9;
+      border: 1px solid rgba(215, 201, 190, 0.86);
+      border-radius: 12px;
+      outline: none;
+      transition: border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 4px rgba(122, 106, 94, 0.12);
+    }
+
+    .honeypot {
+      position: absolute;
+      left: -10000px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    .checkbox-field {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 12px;
+      align-items: start;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .checkbox-field input {
+      min-height: 20px;
+      width: 20px;
+      margin: 1px 0 0;
+      accent-color: var(--primary);
+    }
+
+    .form-status {
+      min-height: 22px;
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .form-status.success {
+      color: #4f6a4d;
+    }
+
+    .form-status.error {
+      color: #9b3d32;
+    }
+
+    .testing-header, .feedback-header, .social-header {
+      max-width: 680px;
+      margin: 0 auto 50px;
+      text-align: center;
+    }
+
+    .testing-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 18px;
+    }
+
+    .testing-card {
+      min-height: 178px;
+      padding: 25px 16px;
+      text-align: center;
+      border: 1px solid rgba(215, 201, 190, 0.58);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .testing-card .card-icon {
+      margin: 0 auto 18px;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: #fffdf9;
+      box-shadow: none;
+    }
+
+    .testing-card h3 {
+      margin-bottom: 8px;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      line-height: 1.25;
+      text-transform: uppercase;
+    }
+
+    .testing-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .feedback-section {
+      background: rgba(244, 243, 241, 0.7);
+    }
+
+    .feedback-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .feedback-card {
+      min-height: 230px;
+      padding: 34px;
+      border: 1px solid rgba(215, 201, 190, 0.6);
+      border-radius: 28px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(251, 248, 244, 0.9)),
+        var(--surface);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .quote-mark {
+      display: block;
+      margin-bottom: 28px;
+      color: rgba(122, 106, 94, 0.18);
+      font-family: var(--serif);
+      font-size: 54px;
+      line-height: 0.55;
+    }
+
+    .feedback-card p {
+      margin-bottom: 34px;
+      color: var(--text);
+      font-family: var(--serif);
+      font-size: 21px;
+      line-height: 1.35;
+    }
+
+    .feedback-card small {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .social-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .social-card {
+      overflow: hidden;
+      padding: 32px;
+      border: 1px solid rgba(215, 201, 190, 0.62);
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .social-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .social-name {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .social-icon {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      color: var(--primary);
+      border-radius: 16px;
+      background: #fffdf9;
+      border: 1px solid rgba(215, 201, 190, 0.62);
+    }
+
+    .social-card h3 {
+      margin: 0;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .social-card p {
+      margin: 1px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .social-arrow {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      border: 1px solid rgba(215, 201, 190, 0.72);
+      color: var(--primary);
+      background: rgba(255, 255, 255, 0.62);
+    }
+
+    .social-images {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .social-images img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: 18px;
+      background: var(--surface-warm);
+    }
+
+    .site-footer {
+      padding: 74px 0 98px;
+      border-top: 1px solid rgba(215, 201, 190, 0.56);
+      background: #f7f4ef;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .footer-brand {
+      margin-bottom: 20px;
+      font-family: var(--serif);
+      color: var(--primary);
+      font-size: 26px;
+      letter-spacing: 0.16em;
+    }
+
+    .footer-grid p, .footer-grid a {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-title {
+      margin-bottom: 15px;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .disclaimer {
+      margin: 12px 0 0;
+      max-width: 360px;
+    }
+
+    .copyright {
+      margin: 46px 0 0;
+      color: rgba(91, 81, 74, 0.65);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .sticky-cta {
+      display: none;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate3d(0, 0, 0); }
+      50% { transform: translate3d(0, -10px, 0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 1ms !important;
+        transition-duration: 1ms !important;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 116px;
+      }
+
+      .hero-grid, .waitlist-shell, .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-grid {
+        gap: 42px;
+      }
+
+      .waitlist-shell {
+        padding: 40px;
+      }
+
+      .testing-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding-bottom: 84px;
+      }
+
+      .container {
+        width: min(calc(100% - 28px), var(--max));
+      }
+
+      .nav {
+        min-height: 66px;
+      }
+
+      .brand {
+        font-size: 17px;
+      }
+
+      .site-header .button {
+        min-height: 38px;
+        padding: 0 14px;
+        font-size: 10px;
+      }
+
+      .section {
+        padding: 70px 0;
+      }
+
+      .hero {
+        padding: 96px 0 66px;
+        text-align: center;
+      }
+
+      h1 {
+        margin-inline: auto;
+        font-size: 42px;
+      }
+
+      .hero-copy {
+        margin-inline: auto;
+        font-size: 16px;
+      }
+
+      .hero-actions {
+        justify-content: center;
+      }
+
+      .hero-actions .button {
+        width: 100%;
+      }
+
+      .sample-note {
+        justify-content: center;
+      }
+
+      .product-frame {
+        min-height: 306px;
+        border-radius: 28px;
+      }
+
+      .product-frame img {
+        min-height: 306px;
+      }
+
+      .badge-stack {
+        inset: auto 12px 14px 12px;
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .hero-badge {
+        width: 100%;
+        min-width: 0;
+        padding: 10px 12px;
+        border-radius: 16px;
+      }
+
+      .hero-badge:nth-child(2),
+      .hero-badge:nth-child(3) {
+        margin-left: 0;
+      }
+
+      .waitlist-shell {
+        padding: 24px;
+        border-radius: 28px;
+      }
+
+      .form-card {
+        padding: 24px;
+        border-radius: 24px;
+      }
+
+      .form-grid, .feedback-grid, .social-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .testing-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+
+      .testing-card {
+        min-height: 165px;
+        padding: 22px 13px;
+      }
+
+      .footer-grid {
+        gap: 30px;
+        text-align: center;
+      }
+
+      .disclaimer {
+        margin-inline: auto;
+      }
+
+      .sticky-cta {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 45;
+        display: block;
+        padding: 12px 14px 16px;
+        background: rgba(255, 255, 255, 0.88);
+        border-top: 1px solid rgba(215, 201, 190, 0.72);
+        backdrop-filter: blur(18px);
+      }
+
+      .sticky-cta .button {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
+  <header class="site-header">
+    <nav class="nav container" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="ZAE SOUL home">ZAE SOUL</a>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#testing">Testing</a>
+        <a href="#waitlist">Join Waitlist</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <a class="button button-primary" href="#waitlist">Join Waitlist</a>
+    </nav>
+  </header>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+  <main id="top">
+    <section class="hero container" id="about">
+      <div class="hero-grid">
+        <div class="hero-content reveal">
+          <h1>SPF that feels like skincare.</h1>
+          <p class="hero-copy">ZAE SOUL SPF is coming soon. Lightweight feel, no white cast focus, and everyday comfort.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#waitlist">Join Early Access</a>
+            <a class="button button-secondary" href="#journey">Follow the sample journey
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h13m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+          <p class="sample-note">Samples are currently being tested before launch.</p>
+        </div>
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">Zae Soul</a>
-  <ul class="nav-links">
-    <li><a href="#about">Our Story</a></li>
-    <li><a href="#products">Collection</a></li>
-    <li><a href="#ritual">Ritual</a></li>
-    <li><a href="#ingredients">Formula</a></li>
-  </ul>
-  <a href="#products" class="nav-cta">Shop Now</a>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grain"></div>
-  <div class="hero-content">
-    <p class="hero-korean-top">재소울 뷰티 · Seoul-Inspired Skincare</p>
-    <h1 class="hero-title">
-      <span>Zae</span>
-      <span>Soul</span>
-    </h1>
-    <div class="hero-divider">
-      <div class="hero-divider-line"></div>
-      <span class="hero-korean-char">미</span>
-      <div class="hero-divider-line"></div>
-    </div>
-    <p class="hero-tagline">K — Beauty Inspired Formula</p>
-    <div class="hero-cta-group">
-      <a href="#products" class="btn-primary">Discover the Collection</a>
-      <a href="#about" class="btn-secondary">Our Story</a>
-    </div>
-  </div>
-  <div class="hero-scroll">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
-  </div>
-</section>
-
-<!-- MARQUEE -->
-<div class="marquee-section">
-  <div class="marquee-track">
-    <span class="marquee-item">SPF 50 Protection</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item">재소울 뷰티</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item">No White Cast</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item">K-Beauty Inspired</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item">Every Skin Tone</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item">Born in London</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item">SPF 50 Protection</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item">재소울 뷰티</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item">No White Cast</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item">K-Beauty Inspired</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item">Every Skin Tone</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item">Born in London</span>
-    <span class="marquee-item">·</span>
-  </div>
-</div>
-
-<!-- ABOUT -->
-<section class="about" id="about">
-  <div class="reveal">
-    <p class="about-label">Our Story · 우리의 이야기</p>
-    <h2 class="about-title">Born in London.<br>Inspired by Seoul.</h2>
-    <p class="about-text">Founded by Zara and Jae — two Londoners obsessed with Korean skincare — Zae Soul was created for skin that's been underserved for too long. We brought the precision of K-beauty formulation to the streets of London.</p>
-    <p class="about-text">Every product carries the soul of both cities. The rigour of Seoul's skincare culture. The boldness of London's beauty scene. Made for every skin tone, every complexion, every person.</p>
-    <div class="about-stats">
-      <div>
-        <div class="stat-number">SPF</div>
-        <div class="stat-number" style="font-size:24px">50+</div>
-        <div class="stat-label">Protection</div>
-      </div>
-      <div>
-        <div class="stat-number">0%</div>
-        <div class="stat-label">White Cast</div>
-      </div>
-      <div>
-        <div class="stat-number">100%</div>
-        <div class="stat-label">Every Skin Tone</div>
-      </div>
-    </div>
-  </div>
-  <div class="about-image reveal">
-    <div class="about-image-inner"></div>
-    <div class="about-image-tag">재소울 · Since 2025</div>
-  </div>
-</section>
-
-<!-- PRODUCTS -->
-<section class="products" id="products">
-  <div class="section-header reveal">
-    <p class="section-label">The Collection · 컬렉션</p>
-    <h2 class="section-title">Soul-Powered<br>Suncare</h2>
-  </div>
-  <div class="products-grid">
-    <div class="product-card reveal">
-      <div class="product-card-image">
-        <div class="product-card-bg"></div>
-        <div class="product-card-korean">선</div>
-      </div>
-      <div class="product-card-content">
-        <div class="product-name">Tinted Soul SPF 50</div>
-        <div class="product-korean">틴티드 선크림</div>
-        <div class="product-desc">Lightweight tinted formula. Zero white cast. Dewy glow finish for all skin tones.</div>
-        <div class="product-price">£16.99 <span>Free UK Delivery</span></div>
-      </div>
-    </div>
-    <div class="product-card reveal">
-      <div class="product-card-image">
-        <div class="product-card-bg"></div>
-        <div class="product-card-korean">빛</div>
-      </div>
-      <div class="product-card-content">
-        <div class="product-name">Glow Essence SPF 50</div>
-        <div class="product-korean">글로우 에센스</div>
-        <div class="product-desc">Serum-finish sunscreen with hyaluronic acid. Glass skin in one step.</div>
-        <div class="product-price">£18.99 <span>Free UK Delivery</span></div>
-      </div>
-    </div>
-    <div class="product-card reveal">
-      <div class="product-card-image">
-        <div class="product-card-bg"></div>
-        <div class="product-card-korean">순</div>
-      </div>
-      <div class="product-card-content">
-        <div class="product-name">Pure Matte SPF 50</div>
-        <div class="product-korean">퓨어 매트</div>
-        <div class="product-desc">Oil-control matte finish. Invisible on skin. Perfect under makeup.</div>
-        <div class="product-price">£15.99 <span>Free UK Delivery</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- RITUAL -->
-<section class="ritual" id="ritual">
-  <div class="section-header reveal">
-    <p class="section-label">The Ritual · 의식</p>
-    <h2 class="section-title" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(40px,5vw,64px);font-weight:300">Your Morning<br>Soul Ritual</h2>
-  </div>
-  <div class="ritual-grid">
-    <div class="ritual-steps reveal">
-      <div class="ritual-step">
-        <div class="step-number">01</div>
-        <div class="step-content">
-          <div class="step-title">Cleanse</div>
-          <div class="step-korean">세안 · Sae-an</div>
-          <div class="step-text">Start with a clean canvas. Gentle cleanse to prepare your skin for maximum SPF absorption.</div>
+        <div class="hero-visual reveal">
+          <div class="product-frame" aria-label="ZAE SOUL SPF sample tube in a soft skincare scene">
+            <img src="https://lh3.googleusercontent.com/aida/AP1WRLshuld86GVK0-f_Swwomnn1TCei7tnfetavCXZqvqtyAvssrhS4vlulfYcm4Maqw74scI7QnK3S1KuhcV9bKd4qvZCqhhz2Whzdl6IYuXSKugwihXJwMrvoj1lHt9gpwUth4vac9antjx3VX4lkPI5ov09rNYmkVIV39MrBCRAonnbPIymZlBnKt9NdgH2Smoh4-h2Hhbp1cBVzQgJTgwlU9mkFfEV-sF8PnDNFBpKjshYkJgVjlRnWSN8" alt="Slim ivory ZAE SOUL SPF sample tube with cream texture">
+          </div>
+          <div class="badge-stack" aria-label="Product focus areas">
+            <div class="hero-badge">
+              <span class="badge-icon">
+                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 21c4-2.8 7-6.1 7-10.3C19 6.4 15.9 3 12 3S5 6.4 5 10.7C5 14.9 8 18.2 12 21Z" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M9 11.5c1.8.7 4.2.7 6 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <span>Lightweight feel</span>
+            </div>
+            <div class="hero-badge">
+              <span class="badge-icon">
+                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="m4 14 6-6 4 4 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M4 20h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <span>No white cast focus</span>
+            </div>
+            <div class="hero-badge">
+              <span class="badge-icon">
+                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M6.5 17.5c-2.3-2.3-2.3-6.1 0-8.5l5.5-5.5L17.5 9c2.3 2.4 2.3 6.2 0 8.5-3 3-8 3-11 0Z" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M9 16c1.9 1.2 4.1 1.2 6 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <span>Daily comfort SPF</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="ritual-step">
-        <div class="step-number">02</div>
-        <div class="step-content">
-          <div class="step-title">Tone & Essence</div>
-          <div class="step-korean">토너 · Toner</div>
-          <div class="step-text">Layer your essences. Korean skincare is about layering light hydration for a plump base.</div>
+    </section>
+
+    <section class="section waitlist-band" id="waitlist">
+      <div class="container waitlist-shell reveal">
+        <div>
+          <h2>Join the waitlist</h2>
+          <p class="section-copy">Be the first to try ZAE SOUL SPF and help shape the final formula.</p>
+          <ul class="benefits">
+            <li><span class="benefit-icon">⚗</span><span>Early access to samples</span></li>
+            <li><span class="benefit-icon">◌</span><span>Testing updates &amp; behind-the-scenes</span></li>
+            <li><span class="benefit-icon">✦</span><span>Launch offers &amp; exclusive rewards</span></li>
+          </ul>
+        </div>
+
+        <form class="form-card" id="waitlistForm" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" autocomplete="name" placeholder="Your name" required>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+            </div>
+            <div class="field">
+              <label for="skinType">Skin type</label>
+              <select id="skinType" name="skinType" required>
+                <option value="">Select your skin type</option>
+                <option value="oily">Oily</option>
+                <option value="dry">Dry</option>
+                <option value="combination">Combination</option>
+                <option value="sensitive">Sensitive</option>
+                <option value="normal">Normal</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="spfProblem">Biggest SPF problem</label>
+              <select id="spfProblem" name="spfProblem" required>
+                <option value="">Select your biggest concern</option>
+                <option value="white cast">White cast</option>
+                <option value="greasy feeling">Greasy feeling</option>
+                <option value="breakouts">Breakouts</option>
+                <option value="stings eyes">Stings eyes</option>
+                <option value="pills under makeup">Pills under makeup</option>
+                <option value="too expensive">Too expensive</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="country">Country</label>
+              <input id="country" name="country" type="text" autocomplete="country-name" placeholder="United Kingdom" required>
+            </div>
+            <div class="field">
+              <label for="instagram">Instagram</label>
+              <input id="instagram" name="instagram" type="text" inputmode="text" placeholder="@yourhandle">
+            </div>
+            <div class="field honeypot" aria-hidden="true">
+              <label for="website">Website</label>
+              <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+            </div>
+            <label class="checkbox-field field-full" for="consent">
+              <input id="consent" name="consent" type="checkbox" required>
+              <span>I agree to receive ZAE SOUL launch updates and early access emails.</span>
+            </label>
+          </div>
+          <button class="button button-primary" id="submitButton" type="submit" style="width: 100%; margin-top: 22px;">Join Early Access</button>
+          <p class="form-status" id="formStatus" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="section" id="testing">
+      <div class="container">
+        <div class="testing-header reveal">
+          <h2>What we’re testing before launch</h2>
+        </div>
+        <div class="testing-grid">
+          <article class="testing-card reveal">
+            <span class="card-icon">▦</span>
+            <h3>Texture</h3>
+            <p>Lightweight feel that blends effortlessly.</p>
+          </article>
+          <article class="testing-card reveal">
+            <span class="card-icon">◍</span>
+            <h3>White cast</h3>
+            <p>Testing how it settles across skin tones.</p>
+          </article>
+          <article class="testing-card reveal">
+            <span class="card-icon">✺</span>
+            <h3>Makeup compatibility</h3>
+            <p>Watching for smooth layers under makeup.</p>
+          </article>
+          <article class="testing-card reveal">
+            <span class="card-icon">◎</span>
+            <h3>Eye sting</h3>
+            <p>Checking comfort around the eye area.</p>
+          </article>
+          <article class="testing-card reveal">
+            <span class="card-icon">◷</span>
+            <h3>4-hour wear</h3>
+            <p>Observing everyday feel after several hours.</p>
+          </article>
+          <article class="testing-card reveal">
+            <span class="card-icon">◒</span>
+            <h3>Sensitive-skin feel</h3>
+            <p>Collecting sensitive-skin comfort notes.</p>
+          </article>
         </div>
       </div>
-      <div class="ritual-step">
-        <div class="step-number">03</div>
-        <div class="step-content">
-          <div class="step-title">Zae Soul SPF</div>
-          <div class="step-korean">선크림 · Sunscreen</div>
-          <div class="step-text">The final step. Apply Zae Soul SPF 50 as the last layer. Pat gently — never rub. Let it melt into your skin.</div>
+    </section>
+
+    <section class="section feedback-section">
+      <div class="container">
+        <div class="feedback-header reveal">
+          <h2>Built with real feedback</h2>
+          <p class="section-copy" style="margin-inline: auto;">Before placing our first full order, we’re collecting feedback from people who actually wear SPF daily.</p>
+        </div>
+        <div class="feedback-grid">
+          <article class="feedback-card reveal">
+            <span class="quote-mark">“</span>
+            <p>Feels like skincare, not sunscreen.</p>
+            <small>Community note</small>
+          </article>
+          <article class="feedback-card reveal">
+            <span class="quote-mark">“</span>
+            <p>No white cast and layers well.</p>
+            <small>Community note</small>
+          </article>
+          <article class="feedback-card reveal">
+            <span class="quote-mark">“</span>
+            <p>Lightweight enough for daily wear.</p>
+            <small>Community note</small>
+          </article>
         </div>
       </div>
-      <div class="ritual-step">
-        <div class="step-number">04</div>
-        <div class="step-content">
-          <div class="step-title">Reapply</div>
-          <div class="step-korean">재도포 · Jae-dopo</div>
-          <div class="step-text">Every 2 hours for full protection. Our lightweight formula makes reapplication effortless.</div>
+    </section>
+
+    <section class="section" id="journey">
+      <div class="container">
+        <div class="social-header reveal">
+          <h2>Follow the sample testing journey</h2>
+          <p class="section-copy" style="margin-inline: auto;">Behind-the-scenes updates and real moments.</p>
+        </div>
+        <div class="social-grid">
+          <article class="social-card reveal">
+            <div class="social-top">
+              <div class="social-name">
+                <span class="social-icon" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <rect x="4" y="4" width="16" height="16" rx="5" stroke="currentColor" stroke-width="1.6"/>
+                    <circle cx="12" cy="12" r="3.3" stroke="currentColor" stroke-width="1.6"/>
+                    <circle cx="16.8" cy="7.2" r="1" fill="currentColor"/>
+                  </svg>
+                </span>
+                <span>
+                  <h3>Instagram</h3>
+                  <p>@zaesoul.skincare</p>
+                </span>
+              </div>
+              <span class="social-arrow" aria-hidden="true">↗</span>
+            </div>
+            <div class="social-images">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6XCpoLhOCJGwTAlCJDOonxcwOiVZvuVeGjS6acKunts0kdv4kJrK-aHrglVpbmmUGujltOCdaa5nbszfftf_DoE59F37bpJN54A74dyaoT3pUx1huT3acTiYtRHymQlTecO-kM8MgTYc3KvMLMFkzhn8cBK0U5dQtoZcXzDZLOdaWczeSjxjvzKAxiXGPp1Wce0FcT6J3noOMlGTXSXe9IIqRKUu4gpbKUdcHGw7eYiCRoxoe8KlwJrO0GFf15_qjO0rTzlEVRDk" alt="Skincare sample testing image">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDRylloSrBSsMpvisGmU4WoFrTMtNERa8GY87ph97mG3mSx5T_98c6pidbM-2vr4Ga1TNN5sAhKA8FLsBcdu9z21lTpYGffO15-S4RSm-EdG6me0cLXZi5ISoGBtb7qa1gD9iKB5jbJvW2My9_JerhwqgIMO-3g8YeAFcLZcbIwD_zv54qnakNnNssbspbW3H50dFnhUThPT3PGPoxle3UwNd8v6nzzYhEaMPLolw49CpeolEOHUAOTcrfPQULQOpVzr6WLRdQFgM" alt="Cream texture sample image">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTLd19aUTkmWWgEODfZGmtj71Eenauu4bYGcX1xM4wllf1CobqnaVcv2a36EcNc-K1855gEDKhLk8ACi8eZ-bS9LNVa-JQh4uwyfPTXd_vJE4b2kwc7DlfSthF1Wobjlt8_csuHtCHG5oO6HB-5zX93JlrTIVfzJX2ssjp5JPEZnddYpmS65iGh_JkMywbNqthCk2OqIdsOwqSKrXimfldIHU1PjDVOGgHjXjpDhQ0rssX285rmRNuvmG2jy20OfEjbMxk72aioiY" alt="ZAE SOUL product sample image">
+            </div>
+          </article>
+
+          <article class="social-card reveal">
+            <div class="social-top">
+              <div class="social-name">
+                <span class="social-icon" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <path d="M14 3v11.2a4.2 4.2 0 1 1-3.8-4.18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M14 5.5c1.2 2.1 2.9 3.3 5 3.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                  </svg>
+                </span>
+                <span>
+                  <h3>TikTok</h3>
+                  <p>@zaesoul.skincare</p>
+                </span>
+              </div>
+              <span class="social-arrow" aria-hidden="true">↗</span>
+            </div>
+            <div class="social-images">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxsw8zUTI-TXPNUR-iUUveqN9nIg4omdiAPEMCS488-RXQGYzEukBeFE3xxmhVRfpdSz1j9-OECy9T-5yyt7zxZhFDNbbn5MHmxFzOn6Mu7SkFOEHvn0XNUTs7_7TD2MLg0LaknHm5SJEKS-pdznySTqiAdbFkMvY9XQHh5WeCYShObXgWFwB1ZLwjCGn5i1MBPp0Ms2iF2mQH44iozq6dJEpdxisxSbLX_7Wq8TsXhZAHTrZ0cq9fUSALVIGsb6tCAG5697eEXHs" alt="SPF sample tube image">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3mEKVdS8qgjrd1pTXUU1tAbuyY4terQkiCZWY7gkd9b8AarAP_jKDXsa3JtgG3NElutFopdgvpU_BhVWi9O0y0CKfMIL4A7hxfeoMIgTyLXFlljpEx7zAYvrBTdx7v5L54fLVOSn8w-JGA9PE5w6Mzg7ZvD383q2ldpFkMozM1G-1EkUChh8P7BT26DIgS1-WY93cnNoqBhij89t5XNiBSC7y1u2PCys8Z_WD9dZZgE7ZBu3RuBPsLN94sl0JGhybs38E-vGQMao" alt="Cream swirl texture image">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6Ru2_vnjXOp5x9Q3yc4FX5r-47z1O2Sg0ZSCiTVjw2UQbBeJ_C6b5N7KZ3LzZz6utocQ2P2JC4edOIl39UajWcynF1frJaisL-sRghUU2yP43m9s9F-u_Wcc_4hJQJT1p-61wFTU5BBv-aLVEdswPgWSoElHWE_ckDfxfgF7IPK1DR4ipaHBZRcZgBvqKBzmTjhMx9IncGzR9Ne35Nd6MiI541bIpLCSO3NEDLT2KwMsGcg-MXTvH1cLmx_NOvpT6FFTauWdWcV8" alt="Skincare sample scene image">
+            </div>
+          </article>
         </div>
       </div>
-    </div>
-    <div class="ritual-visual reveal">
-      <div class="ritual-visual-inner">
-        <div class="ritual-circle">
-          <span class="ritual-circle-text">재소울</span>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">ZAE SOUL</div>
+          <p>Korean-inspired SPF. Skincare-first philosophy. Crafting the future of daily protection.</p>
         </div>
-        <span class="ritual-corner tl">Morning</span>
-        <span class="ritual-corner tr">Ritual</span>
-        <span class="ritual-corner bl">재소울</span>
-        <span class="ritual-corner br">뷰티</span>
+        <div>
+          <div class="footer-title">Contact</div>
+          <a href="mailto:contact@zaesoul.com">contact@zaesoul.com</a>
+          <p class="disclaimer">Questions regarding wholesale, sample testing, or partnership opportunities are welcome.</p>
+        </div>
+        <div>
+          <div class="footer-title">Project status</div>
+          <p class="disclaimer">ZAE SOUL SPF is currently in sample testing. Final product details, claims, pricing, and availability will be confirmed before launch.</p>
+        </div>
       </div>
+      <p class="copyright">© 2026 ZAE SOUL. All rights reserved.</p>
     </div>
-  </div>
-</section>
+  </footer>
 
-<!-- INGREDIENTS -->
-<section class="ingredients" id="ingredients">
-  <div class="section-header reveal">
-    <p class="section-label" style="color:var(--gold)">The Formula · 포뮬라</p>
-    <h2 class="section-title">K-Beauty<br>Ingredients</h2>
+  <div class="sticky-cta">
+    <a class="button button-primary" href="#waitlist">Join Early Access</a>
   </div>
-  <div class="ingredients-grid reveal">
-    <div class="ingredient-item">
-      <div class="ingredient-korean">녹차</div>
-      <div class="ingredient-name">Green Tea Extract</div>
-      <div class="ingredient-desc">Antioxidant Protection</div>
-    </div>
-    <div class="ingredient-item">
-      <div class="ingredient-korean">히알루론</div>
-      <div class="ingredient-name">Hyaluronic Acid</div>
-      <div class="ingredient-desc">Deep Hydration</div>
-    </div>
-    <div class="ingredient-item">
-      <div class="ingredient-korean">나이아신</div>
-      <div class="ingredient-name">Niacinamide</div>
-      <div class="ingredient-desc">Even Skin Tone</div>
-    </div>
-    <div class="ingredient-item">
-      <div class="ingredient-korean">판테놀</div>
-      <div class="ingredient-name">Panthenol B5</div>
-      <div class="ingredient-desc">Skin Barrier Repair</div>
-    </div>
-  </div>
-</section>
 
-<!-- TESTIMONIALS -->
-<section class="testimonials">
-  <div class="section-header reveal">
-    <p class="section-label">Reviews · 리뷰</p>
-    <h2 class="section-title" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(40px,5vw,64px);font-weight:300">The Soul<br>Speaks</h2>
-  </div>
-  <div class="testimonials-grid reveal">
-    <div class="testimonial-card">
-      <div class="testimonial-stars">★ ★ ★ ★ ★</div>
-      <p class="testimonial-text">"Finally a sunscreen that doesn't leave a white cast on my deeper skin tone. The tinted formula is everything."</p>
-      <div class="testimonial-name">Amara K.</div>
-      <div class="testimonial-location">London, UK</div>
-    </div>
-    <div class="testimonial-card">
-      <div class="testimonial-stars">★ ★ ★ ★ ★</div>
-      <p class="testimonial-text">"I'm obsessed with K-beauty and this brand genuinely delivers. The texture is so lightweight. Wear it every single day."</p>
-      <div class="testimonial-name">Priya S.</div>
-      <div class="testimonial-location">Manchester, UK</div>
-    </div>
-    <div class="testimonial-card">
-      <div class="testimonial-stars">★ ★ ★ ★ ★</div>
-      <p class="testimonial-text">"The packaging alone had me. Then I tried it and I was completely sold. This is my everyday SPF now."</p>
-      <div class="testimonial-name">Sofia M.</div>
-      <div class="testimonial-location">Birmingham, UK</div>
-    </div>
-  </div>
-</section>
+  <script>
+    const WAITLIST_ENDPOINT = "https://script.google.com/macros/s/AKfycbzVKRWJYyDml6Daaq6_q3fE8P2hfM7aDkI9jdYl2ITrxaXj8o4H8sFO7bMeVx7qcyM/exec";
 
-<!-- EMAIL SIGNUP -->
-<section class="signup">
-  <h2 class="signup-title">Join the Soul</h2>
-  <p class="signup-sub">Early access · Exclusive offers · Launch updates</p>
-  <div class="signup-form">
-    <input type="email" class="signup-input" placeholder="Your email address">
-    <button class="signup-btn">Join Now</button>
-  </div>
-</section>
+    const form = document.querySelector("#waitlistForm");
+    const submitButton = document.querySelector("#submitButton");
+    const statusEl = document.querySelector("#formStatus");
+    const successMessage = "You’re on the ZAE SOUL early list. We’ll send sample testing updates soon.";
+    const errorMessage = "Something went wrong. Please try again or contact contact@zaesoul.com.";
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-top">
-    <div>
-      <div class="footer-brand-name">Zae Soul</div>
-      <div class="footer-brand-korean">재소울 뷰티</div>
-      <p class="footer-desc">K-Beauty inspired formula. Born in London, created for every skin tone on earth.</p>
-    </div>
-    <div>
-      <div class="footer-col-title">Shop</div>
-      <ul class="footer-links">
-        <li><a href="#">Tinted SPF 50</a></li>
-        <li><a href="#">Glow Essence</a></li>
-        <li><a href="#">Pure Matte</a></li>
-        <li><a href="#">All Products</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="footer-col-title">About</div>
-      <ul class="footer-links">
-        <li><a href="#">Our Story</a></li>
-        <li><a href="#">The Formula</a></li>
-        <li><a href="#">Ingredients</a></li>
-        <li><a href="#">Sustainability</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="footer-col-title">Help</div>
-      <ul class="footer-links">
-        <li><a href="#">FAQ</a></li>
-        <li><a href="#">Shipping</a></li>
-        <li><a href="#">Returns</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span class="footer-copy">© 2025 Zae Soul Beauty · Zae Corp Ltd · All rights reserved</span>
-    <span class="footer-tagline">재소울 · K-Beauty Inspired Formula</span>
-  </div>
-</footer>
+    function setStatus(message, type) {
+      statusEl.textContent = message;
+      statusEl.className = "form-status";
+      if (type) statusEl.classList.add(type);
+    }
 
-<script>
-  // Custom cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+    function getValue(formData, key) {
+      return String(formData.get(key) || "").trim();
+    }
 
-  document.addEventListener('mousemove', e => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    cursor.style.left = mouseX + 'px';
-    cursor.style.top = mouseY + 'px';
-  });
+    async function sendWaitlist(payload) {
+      await fetch(WAITLIST_ENDPOINT, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      });
+      return true;
+    }
 
-  function animateRing() {
-    ringX += (mouseX - ringX) * 0.12;
-    ringY += (mouseY - ringY) * 0.12;
-    ring.style.left = ringX + 'px';
-    ring.style.top = ringY + 'px';
-    requestAnimationFrame(animateRing);
-  }
-  animateRing();
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      setStatus("", "");
 
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        observer.unobserve(entry.target);
+      if (!form.reportValidity()) return;
+
+      const formData = new FormData(form);
+
+      if (getValue(formData, "website")) {
+        form.reset();
+        setStatus(successMessage, "success");
+        return;
+      }
+
+      const payload = {
+        createdAt: new Date().toISOString(),
+        name: getValue(formData, "name"),
+        email: getValue(formData, "email"),
+        skinType: getValue(formData, "skinType"),
+        spfProblem: getValue(formData, "spfProblem"),
+        country: getValue(formData, "country"),
+        instagram: getValue(formData, "instagram"),
+        source: "website",
+        consent: true
+      };
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Joining...";
+
+      try {
+        await sendWaitlist(payload);
+        form.reset();
+        setStatus(successMessage, "success");
+      } catch (error) {
+        setStatus(errorMessage, "error");
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Join Early Access";
       }
     });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => observer.observe(el));
 
-  // Hover cursor expand
-  document.querySelectorAll('a, button, .product-card').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      ring.style.width = '56px';
-      ring.style.height = '56px';
-      ring.style.borderColor = 'var(--gold)';
-    });
-    el.addEventListener('mouseleave', () => {
-      ring.style.width = '32px';
-      ring.style.height = '32px';
-    });
-  });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
 
-  // Duplicate marquee for seamless loop
-  const track = document.querySelector('.marquee-track');
-  track.innerHTML += track.innerHTML;
-</script>
+    document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+  </script>
 </body>
 </html>
