@@ -17,6 +17,9 @@
       --surface-deep: #e5ddd3;
       --primary: #615247;
       --primary-light: #7a6a5e;
+      --rose: #c9897b;
+      --sage: #8f9a85;
+      --gold: #c3a46f;
       --text: #1a1c1a;
       --muted: #5b514a;
       --border: #d7c9be;
@@ -38,9 +41,10 @@
       margin: 0;
       color: var(--text);
       background:
-        radial-gradient(circle at 12% 15%, rgba(244, 223, 208, 0.34), transparent 28rem),
-        radial-gradient(circle at 86% 22%, rgba(214, 195, 181, 0.24), transparent 22rem),
-        linear-gradient(180deg, #fbfaf7 0%, #faf9f6 44%, #f4f1ec 100%);
+        radial-gradient(circle at 9% 12%, rgba(201, 137, 123, 0.22), transparent 24rem),
+        radial-gradient(circle at 88% 20%, rgba(143, 154, 133, 0.18), transparent 24rem),
+        radial-gradient(circle at 52% 92%, rgba(195, 164, 111, 0.14), transparent 28rem),
+        linear-gradient(180deg, #fbfaf7 0%, #faf9f6 44%, #f2eee7 100%);
       font-family: var(--sans);
       font-size: 16px;
       line-height: 1.6;
@@ -55,8 +59,9 @@
       pointer-events: none;
       opacity: 0.5;
       background:
-        linear-gradient(115deg, transparent 0 32%, rgba(255, 255, 255, 0.42) 42%, transparent 54%),
-        repeating-linear-gradient(100deg, rgba(97, 82, 71, 0.018) 0 1px, transparent 1px 15px);
+        linear-gradient(115deg, transparent 0 32%, rgba(255, 255, 255, 0.5) 42%, transparent 54%),
+        repeating-linear-gradient(100deg, rgba(97, 82, 71, 0.018) 0 1px, transparent 1px 15px),
+        radial-gradient(circle at var(--cursor-x, 50%) var(--cursor-y, 28%), rgba(255, 255, 255, 0.34), transparent 18rem);
       transform: translate3d(var(--ambient-x, 0), var(--ambient-y, 0), 0);
       transition: transform 240ms ease-out;
     }
@@ -223,9 +228,9 @@
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1fr minmax(420px, 520px);
+      grid-template-columns: minmax(0, 0.92fr) minmax(420px, 560px);
       align-items: center;
-      gap: 74px;
+      gap: 84px;
     }
 
     h1, h2, h3, p {
@@ -283,6 +288,49 @@
       font-size: 13px;
     }
 
+    .hero-proof {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      max-width: 560px;
+      margin-top: 34px;
+    }
+
+    .proof-tile {
+      min-height: 112px;
+      padding: 18px;
+      border: 1px solid rgba(215, 201, 190, 0.66);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.6);
+      box-shadow: 0 16px 36px rgba(97, 82, 71, 0.07);
+      backdrop-filter: blur(16px);
+      transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+    }
+
+    .proof-tile:hover {
+      transform: translateY(-5px);
+      border-color: rgba(201, 137, 123, 0.36);
+      box-shadow: 0 22px 48px rgba(97, 82, 71, 0.12);
+    }
+
+    .proof-tile strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--primary);
+      font-family: var(--serif);
+      font-size: 25px;
+      line-height: 1;
+    }
+
+    .proof-tile span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.35;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
     .sample-note::before {
       width: 8px;
       height: 8px;
@@ -299,13 +347,13 @@
     .product-frame {
       position: relative;
       overflow: hidden;
-      min-height: 382px;
+      min-height: 640px;
       border: 1px solid rgba(215, 201, 190, 0.72);
-      border-radius: 32px;
+      border-radius: 36px;
       background:
         linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(240, 233, 224, 0.5)),
         var(--surface-warm);
-      box-shadow: var(--shadow);
+      box-shadow: 0 34px 95px rgba(97, 82, 71, 0.2);
       isolation: isolate;
       transform:
         perspective(900px)
@@ -349,15 +397,16 @@
     }
 
     .hero-visual:hover .product-frame {
-      box-shadow: 0 34px 90px rgba(97, 82, 71, 0.18);
+      box-shadow: 0 42px 110px rgba(97, 82, 71, 0.25);
     }
 
     .product-frame img {
       width: 100%;
       height: 100%;
-      min-height: 382px;
+      min-height: 640px;
       object-fit: cover;
-      filter: saturate(0.92) contrast(1.02);
+      object-position: 51% 42%;
+      filter: saturate(0.98) contrast(1.03);
     }
 
     .badge-stack {
@@ -479,6 +528,156 @@
       border: 1px solid rgba(215, 201, 190, 0.72);
       border-radius: 16px;
       box-shadow: 0 10px 26px rgba(97, 82, 71, 0.07);
+    }
+
+    .photo-story {
+      position: relative;
+      overflow: hidden;
+      padding: 42px 0 112px;
+    }
+
+    .photo-story::before {
+      position: absolute;
+      inset: 12% 0 auto;
+      height: 42%;
+      content: "";
+      background: linear-gradient(90deg, rgba(143, 154, 133, 0.08), rgba(201, 137, 123, 0.12), rgba(195, 164, 111, 0.08));
+      transform: skewY(-4deg);
+      transform-origin: center;
+    }
+
+    .story-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(280px, 0.8fr) 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .story-copy h2 {
+      max-width: 560px;
+    }
+
+    .story-copy .section-copy {
+      margin-bottom: 32px;
+    }
+
+    .ritual-list {
+      display: grid;
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .ritual-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 15px 0;
+      color: var(--primary);
+      border-bottom: 1px solid rgba(215, 201, 190, 0.72);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .ritual-list span {
+      display: grid;
+      place-items: center;
+      width: 31px;
+      height: 31px;
+      color: #fffaf5;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--primary), var(--rose));
+      font-size: 12px;
+      box-shadow: 0 10px 24px rgba(97, 82, 71, 0.16);
+    }
+
+    .photo-cascade {
+      position: relative;
+      min-height: 650px;
+    }
+
+    .motion-photo {
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.58);
+      border-radius: 30px;
+      background: var(--surface-warm);
+      box-shadow: 0 26px 70px rgba(97, 82, 71, 0.16);
+      transform: translate3d(var(--photo-x, 0), var(--photo-y, 0), 0) rotate(var(--photo-rotate, 0deg));
+      transition: transform 360ms ease, box-shadow 360ms ease, filter 360ms ease;
+    }
+
+    .motion-photo:hover {
+      filter: saturate(1.04) contrast(1.02);
+      box-shadow: 0 34px 86px rgba(97, 82, 71, 0.22);
+    }
+
+    .motion-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 700ms ease;
+    }
+
+    .motion-photo:hover img {
+      transform: scale(1.045);
+    }
+
+    .photo-cascade .motion-photo:nth-child(1) {
+      position: absolute;
+      inset: 0 auto auto 9%;
+      width: 42%;
+      height: 440px;
+      --photo-rotate: -3deg;
+    }
+
+    .photo-cascade .motion-photo:nth-child(2) {
+      position: absolute;
+      inset: 86px 4% auto auto;
+      width: 45%;
+      height: 520px;
+      --photo-rotate: 2.5deg;
+    }
+
+    .photo-cascade .motion-photo:nth-child(3) {
+      position: absolute;
+      inset: auto auto 0 31%;
+      width: 36%;
+      height: 340px;
+      --photo-rotate: -1deg;
+    }
+
+    .founder-note {
+      position: absolute;
+      right: 0;
+      bottom: 18px;
+      width: min(255px, 42%);
+      padding: 24px;
+      color: var(--primary);
+      border: 1px solid rgba(215, 201, 190, 0.72);
+      border-radius: 24px;
+      background: rgba(255, 253, 249, 0.82);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(18px);
+    }
+
+    .founder-note strong {
+      display: block;
+      margin-bottom: 10px;
+      font-family: var(--serif);
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .founder-note p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
     }
 
     .form-card {
@@ -978,7 +1177,7 @@
         padding-top: 116px;
       }
 
-      .hero-grid, .waitlist-shell, .footer-grid {
+      .hero-grid, .story-grid, .waitlist-shell, .footer-grid {
         grid-template-columns: 1fr;
       }
 
@@ -988,6 +1187,18 @@
 
       .hero-grid {
         gap: 42px;
+      }
+
+      .hero-proof {
+        max-width: none;
+      }
+
+      .photo-story {
+        padding: 38px 0 86px;
+      }
+
+      .photo-cascade {
+        min-height: 600px;
       }
 
       .waitlist-shell {
@@ -1065,13 +1276,60 @@
         justify-content: center;
       }
 
+      .hero-proof {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .proof-tile {
+        min-height: auto;
+        text-align: left;
+      }
+
       .product-frame {
-        min-height: 306px;
+        min-height: 440px;
         border-radius: 28px;
       }
 
       .product-frame img {
-        min-height: 306px;
+        min-height: 440px;
+      }
+
+      .photo-story {
+        padding: 28px 0 72px;
+      }
+
+      .story-grid {
+        gap: 34px;
+      }
+
+      .ritual-list li {
+        font-size: 12px;
+      }
+
+      .photo-cascade {
+        display: grid;
+        min-height: auto;
+        gap: 14px;
+      }
+
+      .photo-cascade .motion-photo:nth-child(1),
+      .photo-cascade .motion-photo:nth-child(2),
+      .photo-cascade .motion-photo:nth-child(3) {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4 / 5;
+        --photo-rotate: 0deg;
+      }
+
+      .founder-note {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        width: 100%;
+        text-align: left;
       }
 
       .badge-stack {
@@ -1183,11 +1441,25 @@
             </a>
           </div>
           <p class="sample-note">Samples are currently being tested before launch.</p>
+          <div class="hero-proof" aria-label="Launch priorities">
+            <div class="proof-tile">
+              <strong>01</strong>
+              <span>Real skin testing</span>
+            </div>
+            <div class="proof-tile">
+              <strong>02</strong>
+              <span>Daily glow finish</span>
+            </div>
+            <div class="proof-tile">
+              <strong>03</strong>
+              <span>Launch list first</span>
+            </div>
+          </div>
         </div>
 
         <div class="hero-visual reveal">
           <div class="product-frame" aria-label="ZAE SOUL SPF sample tube in a soft skincare scene">
-            <img src="https://lh3.googleusercontent.com/aida/AP1WRLshuld86GVK0-f_Swwomnn1TCei7tnfetavCXZqvqtyAvssrhS4vlulfYcm4Maqw74scI7QnK3S1KuhcV9bKd4qvZCqhhz2Whzdl6IYuXSKugwihXJwMrvoj1lHt9gpwUth4vac9antjx3VX4lkPI5ov09rNYmkVIV39MrBCRAonnbPIymZlBnKt9NdgH2Smoh4-h2Hhbp1cBVzQgJTgwlU9mkFfEV-sF8PnDNFBpKjshYkJgVjlRnWSN8" alt="Slim ivory ZAE SOUL SPF sample tube with cream texture">
+            <img src="assets/zae-spf-hero.jpg" alt="ZAE SOUL Daily SPF being applied during sample testing" fetchpriority="high">
           </div>
           <div class="badge-stack" aria-label="Product focus areas">
             <div class="hero-badge">
@@ -1217,6 +1489,35 @@
               </span>
               <span>Daily comfort SPF</span>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="photo-story" aria-label="ZAE SOUL sample testing scenes">
+      <div class="container story-grid">
+        <div class="story-copy reveal">
+          <h2>Made in the soft chaos of real sample days.</h2>
+          <p class="section-copy">The launch is being shaped through desk notes, skin checks, mirror moments, and SPF that has to earn a place in an everyday routine.</p>
+          <ul class="ritual-list">
+            <li>Texture notes <span>01</span></li>
+            <li>Wear test diary <span>02</span></li>
+            <li>Glow check <span>03</span></li>
+          </ul>
+        </div>
+        <div class="photo-cascade reveal">
+          <figure class="motion-photo">
+            <img src="assets/zae-founder-laptop.jpg" alt="ZAE SOUL sample tube held beside launch notes and laptop" loading="lazy">
+          </figure>
+          <figure class="motion-photo">
+            <img src="assets/zae-formula-notes.jpg" alt="Writing ZAE SOUL SPF sample feedback beside the product tube" loading="lazy">
+          </figure>
+          <figure class="motion-photo">
+            <img src="assets/zae-sample-notebook.jpg" alt="ZAE SOUL sample notebook and product testing setup" loading="lazy">
+          </figure>
+          <div class="founder-note">
+            <strong>SPF, but personal.</strong>
+            <p>Every note is part of the pre-launch formula feedback loop.</p>
           </div>
         </div>
       </div>
@@ -1408,9 +1709,9 @@
               <span class="social-arrow" aria-hidden="true">↗</span>
             </div>
             <div class="social-images">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6XCpoLhOCJGwTAlCJDOonxcwOiVZvuVeGjS6acKunts0kdv4kJrK-aHrglVpbmmUGujltOCdaa5nbszfftf_DoE59F37bpJN54A74dyaoT3pUx1huT3acTiYtRHymQlTecO-kM8MgTYc3KvMLMFkzhn8cBK0U5dQtoZcXzDZLOdaWczeSjxjvzKAxiXGPp1Wce0FcT6J3noOMlGTXSXe9IIqRKUu4gpbKUdcHGw7eYiCRoxoe8KlwJrO0GFf15_qjO0rTzlEVRDk" alt="Skincare sample testing image">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDRylloSrBSsMpvisGmU4WoFrTMtNERa8GY87ph97mG3mSx5T_98c6pidbM-2vr4Ga1TNN5sAhKA8FLsBcdu9z21lTpYGffO15-S4RSm-EdG6me0cLXZi5ISoGBtb7qa1gD9iKB5jbJvW2My9_JerhwqgIMO-3g8YeAFcLZcbIwD_zv54qnakNnNssbspbW3H50dFnhUThPT3PGPoxle3UwNd8v6nzzYhEaMPLolw49CpeolEOHUAOTcrfPQULQOpVzr6WLRdQFgM" alt="Cream texture sample image">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTLd19aUTkmWWgEODfZGmtj71Eenauu4bYGcX1xM4wllf1CobqnaVcv2a36EcNc-K1855gEDKhLk8ACi8eZ-bS9LNVa-JQh4uwyfPTXd_vJE4b2kwc7DlfSthF1Wobjlt8_csuHtCHG5oO6HB-5zX93JlrTIVfzJX2ssjp5JPEZnddYpmS65iGh_JkMywbNqthCk2OqIdsOwqSKrXimfldIHU1PjDVOGgHjXjpDhQ0rssX285rmRNuvmG2jy20OfEjbMxk72aioiY" alt="ZAE SOUL product sample image">
+              <img src="assets/zae-founder-laptop.jpg" alt="ZAE SOUL sample testing desk moment" loading="lazy">
+              <img src="assets/zae-formula-notes.jpg" alt="Writing formula feedback beside the ZAE SOUL SPF tube" loading="lazy">
+              <img src="assets/zae-sample-notebook.jpg" alt="ZAE SOUL SPF launch notebook and sample setup" loading="lazy">
             </div>
           </article>
 
@@ -1431,9 +1732,9 @@
               <span class="social-arrow" aria-hidden="true">↗</span>
             </div>
             <div class="social-images">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxsw8zUTI-TXPNUR-iUUveqN9nIg4omdiAPEMCS488-RXQGYzEukBeFE3xxmhVRfpdSz1j9-OECy9T-5yyt7zxZhFDNbbn5MHmxFzOn6Mu7SkFOEHvn0XNUTs7_7TD2MLg0LaknHm5SJEKS-pdznySTqiAdbFkMvY9XQHh5WeCYShObXgWFwB1ZLwjCGn5i1MBPp0Ms2iF2mQH44iozq6dJEpdxisxSbLX_7Wq8TsXhZAHTrZ0cq9fUSALVIGsb6tCAG5697eEXHs" alt="SPF sample tube image">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3mEKVdS8qgjrd1pTXUU1tAbuyY4terQkiCZWY7gkd9b8AarAP_jKDXsa3JtgG3NElutFopdgvpU_BhVWi9O0y0CKfMIL4A7hxfeoMIgTyLXFlljpEx7zAYvrBTdx7v5L54fLVOSn8w-JGA9PE5w6Mzg7ZvD383q2ldpFkMozM1G-1EkUChh8P7BT26DIgS1-WY93cnNoqBhij89t5XNiBSC7y1u2PCys8Z_WD9dZZgE7ZBu3RuBPsLN94sl0JGhybs38E-vGQMao" alt="Cream swirl texture image">
-              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6Ru2_vnjXOp5x9Q3yc4FX5r-47z1O2Sg0ZSCiTVjw2UQbBeJ_C6b5N7KZ3LzZz6utocQ2P2JC4edOIl39UajWcynF1frJaisL-sRghUU2yP43m9s9F-u_Wcc_4hJQJT1p-61wFTU5BBv-aLVEdswPgWSoElHWE_ckDfxfgF7IPK1DR4ipaHBZRcZgBvqKBzmTjhMx9IncGzR9Ne35Nd6MiI541bIpLCSO3NEDLT2KwMsGcg-MXTvH1cLmx_NOvpT6FFTauWdWcV8" alt="Skincare sample scene image">
+              <img src="assets/zae-spf-hero.jpg" alt="Applying ZAE SOUL Daily SPF during testing" loading="lazy">
+              <img src="assets/zae-mirror-board.jpg" alt="ZAE SOUL mirror board with product testing notes" loading="lazy">
+              <img src="assets/zae-sample-notebook.jpg" alt="ZAE SOUL handwritten SPF testing notes" loading="lazy">
             </div>
           </article>
         </div>
@@ -1472,6 +1773,8 @@
     const root = document.documentElement;
     const header = document.querySelector(".site-header");
     const productFrame = document.querySelector(".product-frame");
+    const motionPhotos = document.querySelectorAll(".motion-photo");
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const form = document.querySelector("#waitlistForm");
     const submitButton = document.querySelector("#submitButton");
     const statusEl = document.querySelector("#formStatus");
@@ -1500,7 +1803,14 @@
     window.addEventListener("scroll", updateScrollMotion, { passive: true });
     updateScrollMotion();
 
-    if (productFrame) {
+    if (!prefersReducedMotion) {
+      window.addEventListener("pointermove", (event) => {
+        root.style.setProperty("--cursor-x", `${(event.clientX / window.innerWidth) * 100}%`);
+        root.style.setProperty("--cursor-y", `${(event.clientY / window.innerHeight) * 100}%`);
+      }, { passive: true });
+    }
+
+    if (productFrame && !prefersReducedMotion) {
       productFrame.addEventListener("pointermove", (event) => {
         const rect = productFrame.getBoundingClientRect();
         const x = ((event.clientX - rect.left) / rect.width - 0.5) * 8;
@@ -1512,6 +1822,23 @@
       productFrame.addEventListener("pointerleave", () => {
         productFrame.style.setProperty("--tilt-x", "0deg");
         productFrame.style.setProperty("--tilt-y", "0deg");
+      });
+    }
+
+    if (!prefersReducedMotion) {
+      motionPhotos.forEach((photo, index) => {
+        photo.addEventListener("pointermove", (event) => {
+          const rect = photo.getBoundingClientRect();
+          const x = ((event.clientX - rect.left) / rect.width - 0.5) * (10 + index * 2);
+          const y = ((event.clientY - rect.top) / rect.height - 0.5) * (8 + index);
+          photo.style.setProperty("--photo-x", `${x}px`);
+          photo.style.setProperty("--photo-y", `${y}px`);
+        });
+
+        photo.addEventListener("pointerleave", () => {
+          photo.style.setProperty("--photo-x", "0px");
+          photo.style.setProperty("--photo-y", "0px");
+        });
       });
     }
 
@@ -1573,6 +1900,17 @@
       }
     });
 
+    const revealElements = document.querySelectorAll(".reveal");
+
+    function syncRevealFallback() {
+      revealElements.forEach((element) => {
+        const rect = element.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 1.18) {
+          element.classList.add("is-visible");
+        }
+      });
+    }
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -1580,9 +1918,12 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.04, rootMargin: "0px 0px 180px 0px" });
 
-    document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+    revealElements.forEach((element) => observer.observe(element));
+    window.addEventListener("scroll", syncRevealFallback, { passive: true });
+    window.addEventListener("resize", syncRevealFallback);
+    syncRevealFallback();
   </script>
 </body>
 </html>
