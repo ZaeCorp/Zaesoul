@@ -47,6 +47,20 @@
       overflow-x: hidden;
     }
 
+    body::before {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      content: "";
+      pointer-events: none;
+      opacity: 0.5;
+      background:
+        linear-gradient(115deg, transparent 0 32%, rgba(255, 255, 255, 0.42) 42%, transparent 54%),
+        repeating-linear-gradient(100deg, rgba(97, 82, 71, 0.018) 0 1px, transparent 1px 15px);
+      transform: translate3d(var(--ambient-x, 0), var(--ambient-y, 0), 0);
+      transition: transform 240ms ease-out;
+    }
+
     img, svg { display: block; }
 
     a {
@@ -75,6 +89,23 @@
       background: rgba(250, 249, 246, 0.86);
       border-bottom: 1px solid rgba(215, 201, 190, 0.58);
       backdrop-filter: blur(18px);
+      transition: background 220ms ease, box-shadow 220ms ease, min-height 220ms ease;
+    }
+
+    .site-header.is-scrolled {
+      background: rgba(255, 253, 249, 0.94);
+      box-shadow: 0 12px 36px rgba(97, 82, 71, 0.08);
+    }
+
+    .scroll-progress {
+      position: fixed;
+      inset: 0 auto auto 0;
+      z-index: 70;
+      width: var(--scroll-progress, 0%);
+      height: 3px;
+      background: linear-gradient(90deg, #d7c3b5, var(--primary), #b99f8d);
+      box-shadow: 0 0 18px rgba(97, 82, 71, 0.28);
+      transform-origin: left center;
     }
 
     .nav {
@@ -113,6 +144,8 @@
     }
 
     .button {
+      position: relative;
+      overflow: hidden;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -128,8 +161,22 @@
       transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, border-color 180ms ease;
     }
 
+    .button::after {
+      position: absolute;
+      inset: -40% auto -40% -35%;
+      width: 38%;
+      content: "";
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+      transform: skewX(-18deg) translateX(-120%);
+      transition: transform 600ms ease;
+    }
+
     .button:hover {
       transform: translateY(-1px);
+    }
+
+    .button:hover::after {
+      transform: skewX(-18deg) translateX(430%);
     }
 
     .button-primary {
@@ -154,10 +201,24 @@
     }
 
     .hero {
+      position: relative;
       min-height: 590px;
       padding: 112px 0 42px;
       display: grid;
       align-items: center;
+    }
+
+    .hero::after {
+      position: absolute;
+      right: max(24px, calc((100vw - var(--max)) / 2));
+      bottom: 22px;
+      content: "sample testing / formula feedback / early access";
+      color: rgba(97, 82, 71, 0.38);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
     }
 
     .hero-grid {
@@ -183,6 +244,14 @@
       margin-bottom: 24px;
       font-size: clamp(48px, 7vw, 84px);
       line-height: 0.98;
+    }
+
+    .hero h1 {
+      background: linear-gradient(115deg, #161513 0%, #52483f 46%, #181715 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-wrap: balance;
     }
 
     h2 {
@@ -238,6 +307,49 @@
         var(--surface-warm);
       box-shadow: var(--shadow);
       isolation: isolate;
+      transform:
+        perspective(900px)
+        rotateX(var(--tilt-y, 0deg))
+        rotateY(var(--tilt-x, 0deg))
+        translate3d(0, -2px, 0);
+      transition: transform 320ms ease, box-shadow 320ms ease;
+    }
+
+    .product-frame::before,
+    .product-frame::after {
+      position: absolute;
+      z-index: 2;
+      content: "";
+      pointer-events: none;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 253, 249, 0.62), rgba(255, 255, 255, 0));
+      filter: blur(0.2px);
+      opacity: 0.72;
+      transform-origin: center;
+    }
+
+    .product-frame::before {
+      width: 62%;
+      height: 22px;
+      left: -12%;
+      bottom: 28%;
+      border-radius: 999px;
+      transform: rotate(-11deg);
+      animation: creamSweep 7s ease-in-out infinite;
+    }
+
+    .product-frame::after {
+      width: 46%;
+      height: 16px;
+      right: -8%;
+      top: 26%;
+      border-radius: 999px;
+      transform: rotate(14deg);
+      animation: creamSweep 8.5s ease-in-out infinite reverse;
+    }
+
+    .hero-visual:hover .product-frame {
+      box-shadow: 0 34px 90px rgba(97, 82, 71, 0.18);
     }
 
     .product-frame img {
@@ -270,6 +382,12 @@
       box-shadow: var(--shadow-soft);
       animation: float 5.5s ease-in-out infinite;
       backdrop-filter: blur(14px);
+      transition: transform 220ms ease, box-shadow 220ms ease;
+    }
+
+    .hero-badge:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 46px rgba(97, 82, 71, 0.13);
     }
 
     .hero-badge:nth-child(2) {
@@ -305,6 +423,8 @@
     }
 
     .waitlist-shell {
+      position: relative;
+      overflow: hidden;
       display: grid;
       grid-template-columns: 0.9fr 1fr;
       gap: 56px;
@@ -314,6 +434,16 @@
       border-radius: 34px;
       background: rgba(255, 255, 255, 0.44);
       box-shadow: 0 24px 90px rgba(97, 82, 71, 0.08);
+    }
+
+    .waitlist-shell::before {
+      position: absolute;
+      inset: 0;
+      content: "";
+      pointer-events: none;
+      background: linear-gradient(118deg, transparent 0 38%, rgba(255, 255, 255, 0.42) 48%, transparent 58%);
+      transform: translateX(-70%);
+      animation: panelSheen 8s ease-in-out infinite;
     }
 
     .section-copy {
@@ -394,6 +524,12 @@
       transition: border-color 180ms ease, box-shadow 180ms ease;
     }
 
+    .field.is-filled input,
+    .field.is-filled select {
+      background: #fffaf4;
+      border-color: rgba(122, 106, 94, 0.45);
+    }
+
     input:focus, select:focus {
       border-color: var(--primary-light);
       box-shadow: 0 0 0 4px rgba(122, 106, 94, 0.12);
@@ -447,6 +583,100 @@
       text-align: center;
     }
 
+    .journey-strip {
+      padding: 88px 0 96px;
+      background: linear-gradient(180deg, #faf9f6 0%, #f3efe8 100%);
+    }
+
+    .journey-panel {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 0.75fr 1fr;
+      gap: 42px;
+      align-items: center;
+      padding: 44px;
+      border: 1px solid rgba(215, 201, 190, 0.66);
+      border-radius: 32px;
+      background: rgba(255, 255, 255, 0.62);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .journey-panel::after {
+      position: absolute;
+      inset: auto -10% -45% 42%;
+      height: 180px;
+      content: "";
+      background: linear-gradient(90deg, transparent, rgba(215, 195, 181, 0.45), transparent);
+      border-radius: 50%;
+      transform: rotate(-9deg);
+      animation: slowDrift 10s ease-in-out infinite;
+    }
+
+    .journey-panel h2 {
+      margin-bottom: 12px;
+      font-size: clamp(30px, 3vw, 44px);
+    }
+
+    .timeline {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .timeline::before {
+      position: absolute;
+      top: 28px;
+      left: 12%;
+      right: 12%;
+      height: 2px;
+      content: "";
+      background: linear-gradient(90deg, rgba(97, 82, 71, 0.12), rgba(97, 82, 71, 0.42), rgba(97, 82, 71, 0.12));
+      transform-origin: left center;
+      animation: lineGrow 3.8s ease-in-out infinite;
+    }
+
+    .timeline-step {
+      position: relative;
+      padding: 58px 18px 18px;
+      border: 1px solid rgba(215, 201, 190, 0.58);
+      border-radius: 22px;
+      background: rgba(255, 253, 249, 0.78);
+      box-shadow: 0 12px 28px rgba(97, 82, 71, 0.07);
+    }
+
+    .timeline-step b {
+      position: absolute;
+      top: 13px;
+      left: 18px;
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      color: #fffaf5;
+      background: var(--primary);
+      border-radius: 999px;
+      box-shadow: 0 0 0 7px rgba(97, 82, 71, 0.09);
+    }
+
+    .timeline-step h3 {
+      margin-bottom: 6px;
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .timeline-step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
     .testing-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
@@ -461,6 +691,15 @@
       border-radius: 24px;
       background: rgba(255, 255, 255, 0.72);
       box-shadow: var(--shadow-soft);
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+    }
+
+    .testing-card:hover,
+    .feedback-card:hover,
+    .social-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(122, 106, 94, 0.34);
+      box-shadow: 0 22px 52px rgba(97, 82, 71, 0.12);
     }
 
     .testing-card .card-icon {
@@ -508,6 +747,7 @@
         linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(251, 248, 244, 0.9)),
         var(--surface);
       box-shadow: var(--shadow-soft);
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
     }
 
     .quote-mark {
@@ -548,6 +788,7 @@
       border-radius: 30px;
       background: rgba(255, 255, 255, 0.72);
       box-shadow: var(--shadow-soft);
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
     }
 
     .social-top {
@@ -613,6 +854,23 @@
       object-fit: cover;
       border-radius: 18px;
       background: var(--surface-warm);
+      transition: transform 320ms ease, filter 320ms ease;
+    }
+
+    .social-card:hover .social-images img {
+      filter: saturate(1.04) contrast(1.02);
+    }
+
+    .social-card:hover .social-images img:nth-child(1) {
+      transform: translateY(-4px) rotate(-1.5deg);
+    }
+
+    .social-card:hover .social-images img:nth-child(2) {
+      transform: translateY(3px);
+    }
+
+    .social-card:hover .social-images img:nth-child(3) {
+      transform: translateY(-4px) rotate(1.5deg);
     }
 
     .site-footer {
@@ -682,6 +940,26 @@
       50% { transform: translate3d(0, -10px, 0); }
     }
 
+    @keyframes creamSweep {
+      0%, 100% { opacity: 0.42; transform: translateX(-6%) rotate(-11deg) scaleX(0.95); }
+      50% { opacity: 0.88; transform: translateX(18%) rotate(-8deg) scaleX(1.08); }
+    }
+
+    @keyframes panelSheen {
+      0%, 34% { transform: translateX(-78%); }
+      58%, 100% { transform: translateX(82%); }
+    }
+
+    @keyframes slowDrift {
+      0%, 100% { transform: translateX(-2%) rotate(-9deg); }
+      50% { transform: translateX(9%) rotate(-5deg); }
+    }
+
+    @keyframes lineGrow {
+      0%, 100% { transform: scaleX(0.18); opacity: 0.48; }
+      50% { transform: scaleX(1); opacity: 1; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         scroll-behavior: auto !important;
@@ -704,6 +982,10 @@
         grid-template-columns: 1fr;
       }
 
+      .journey-panel {
+        grid-template-columns: 1fr;
+      }
+
       .hero-grid {
         gap: 42px;
       }
@@ -714,6 +996,14 @@
 
       .testing-grid {
         grid-template-columns: repeat(3, 1fr);
+      }
+
+      .timeline {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline::before {
+        display: none;
       }
     }
 
@@ -747,6 +1037,10 @@
       .hero {
         padding: 96px 0 66px;
         text-align: center;
+      }
+
+      .hero::after {
+        display: none;
       }
 
       h1 {
@@ -803,6 +1097,15 @@
         border-radius: 28px;
       }
 
+      .journey-strip {
+        padding: 64px 0;
+      }
+
+      .journey-panel {
+        padding: 24px;
+        border-radius: 26px;
+      }
+
       .form-card {
         padding: 24px;
         border-radius: 24px;
@@ -851,6 +1154,7 @@
   </style>
 </head>
 <body>
+  <div class="scroll-progress" aria-hidden="true"></div>
   <header class="site-header">
     <nav class="nav container" aria-label="Primary navigation">
       <a class="brand" href="#top" aria-label="ZAE SOUL home">ZAE SOUL</a>
@@ -984,6 +1288,32 @@
           <button class="button button-primary" id="submitButton" type="submit" style="width: 100%; margin-top: 22px;">Join Early Access</button>
           <p class="form-status" id="formStatus" aria-live="polite"></p>
         </form>
+      </div>
+    </section>
+
+    <section class="journey-strip" aria-label="Sample testing progress">
+      <div class="container journey-panel reveal">
+        <div>
+          <h2>From samples to launch, with your skin in the loop.</h2>
+          <p class="section-copy">A calmer pre-launch path: test the feel, collect real notes, then refine before the first full order.</p>
+        </div>
+        <div class="timeline">
+          <article class="timeline-step">
+            <b>1</b>
+            <h3>Sample round</h3>
+            <p>Early testers try the texture and daily wear.</p>
+          </article>
+          <article class="timeline-step">
+            <b>2</b>
+            <h3>Feedback pass</h3>
+            <p>We review comfort, white cast, layering, and eye feel.</p>
+          </article>
+          <article class="timeline-step">
+            <b>3</b>
+            <h3>Launch prep</h3>
+            <p>Final details are confirmed before product release.</p>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -1139,6 +1469,9 @@
   <script>
     const WAITLIST_ENDPOINT = "https://script.google.com/macros/s/AKfycbzVKRWJYyDml6Daaq6_q3fE8P2hfM7aDkI9jdYl2ITrxaXj8o4H8sFO7bMeVx7qcyM/exec";
 
+    const root = document.documentElement;
+    const header = document.querySelector(".site-header");
+    const productFrame = document.querySelector(".product-frame");
     const form = document.querySelector("#waitlistForm");
     const submitButton = document.querySelector("#submitButton");
     const statusEl = document.querySelector("#formStatus");
@@ -1154,6 +1487,40 @@
     function getValue(formData, key) {
       return String(formData.get(key) || "").trim();
     }
+
+    function updateScrollMotion() {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = max > 0 ? window.scrollY / max : 0;
+      root.style.setProperty("--scroll-progress", `${Math.max(0, Math.min(1, progress)) * 100}%`);
+      root.style.setProperty("--ambient-y", `${progress * -22}px`);
+      root.style.setProperty("--ambient-x", `${progress * 12}px`);
+      header.classList.toggle("is-scrolled", window.scrollY > 18);
+    }
+
+    window.addEventListener("scroll", updateScrollMotion, { passive: true });
+    updateScrollMotion();
+
+    if (productFrame) {
+      productFrame.addEventListener("pointermove", (event) => {
+        const rect = productFrame.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / rect.width - 0.5) * 8;
+        const y = ((event.clientY - rect.top) / rect.height - 0.5) * -7;
+        productFrame.style.setProperty("--tilt-x", `${x}deg`);
+        productFrame.style.setProperty("--tilt-y", `${y}deg`);
+      });
+
+      productFrame.addEventListener("pointerleave", () => {
+        productFrame.style.setProperty("--tilt-x", "0deg");
+        productFrame.style.setProperty("--tilt-y", "0deg");
+      });
+    }
+
+    document.querySelectorAll(".field input, .field select").forEach((control) => {
+      const syncFilledState = () => control.closest(".field")?.classList.toggle("is-filled", Boolean(control.value));
+      control.addEventListener("input", syncFilledState);
+      control.addEventListener("change", syncFilledState);
+      syncFilledState();
+    });
 
     async function sendWaitlist(payload) {
       await fetch(WAITLIST_ENDPOINT, {
